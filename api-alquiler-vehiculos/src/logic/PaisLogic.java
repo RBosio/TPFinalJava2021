@@ -1,5 +1,7 @@
 package logic;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import data.PaisData;
@@ -12,31 +14,32 @@ public class PaisLogic {
 		pd = new PaisData();
 	}
 	
-	public LinkedList<Pais> getAll(){
-		LinkedList<Pais> paises = null;
-		paises = pd.getAll();
+	public LinkedList<Pais> getAll() throws SQLException, IOException{
+		LinkedList<Pais> paises = pd.getAll();
 		
 		return paises;
 	}
 	
-	public Pais newCountry(Pais p){
-		Pais pais = null;
-		pais = pd.newCountry(p);
+	public Pais getOne(Pais p) throws SQLException, IOException{
+		Pais pais = pd.findById(p);
 		
 		return pais;
 	}
 	
-	public Pais updateCountry(Pais p){
-		Pais pais = null;
-		pais = pd.updateCountry(p);
+	public Pais newCountry(Pais p) throws SQLException, IOException{
+		Pais pais = pd.newCountry(p);
 		
 		return pais;
 	}
 	
+	public Pais updateCountry(Pais p) throws SQLException, IOException{
+		Pais pais = pd.updateCountry(p);
+		
+		return pais;
+	}
 	
-	public Pais deleteCountry(Pais p){
-		Pais pais = null;
-		pais = pd.deleteCountry(pd.findById(p));
+	public Pais deleteCountry(Pais p) throws SQLException, IOException{
+		Pais pais = pd.deleteCountry(pd.findById(p));
 		
 		return pais;
 	}

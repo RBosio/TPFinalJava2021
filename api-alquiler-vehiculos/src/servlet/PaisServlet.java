@@ -1,5 +1,7 @@
 package servlet;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.ws.rs.Consumes;
@@ -26,17 +28,29 @@ public class PaisServlet {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public LinkedList<Pais> getPaises() {
+	public LinkedList<Pais> getPaises() throws SQLException, IOException {
     	LinkedList<Pais> paises = null;
 		paises = pl.getAll();
 		
 		return paises;
 	}
+    
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Pais getPais(@PathParam("id") int id) throws SQLException, IOException {
+    	Pais pais = new Pais();
+    	pais.setIdPais(id);
+		pais = pl.getOne(pais);
+		
+		return pais;
+	}
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais newPais(Pais nuevoPais){
+    public Pais nuevoPais(Pais nuevoPais) throws SQLException, IOException{
     	pl.newCountry(nuevoPais);
     	
     	return nuevoPais;
@@ -46,22 +60,22 @@ public class PaisServlet {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais actualizarPais(Pais actPais, @PathParam("id") int id){
+    public Pais actualizarPais(Pais actPais, @PathParam("id") int id) throws SQLException, IOException{
     	actPais.setIdPais(id);
-    	pl.updateCountry(actPais);
+    	Pais pais = pl.updateCountry(actPais);
     	
-    	return actPais;
+    	return pais;
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais eliminarPais(@PathParam("id") int id){
+    public Pais eliminarPais(@PathParam("id") int id) throws SQLException, IOException{
     	Pais delPais = new Pais();
     	delPais.setIdPais(id);
-    	pl.deleteCountry(delPais);
+    	Pais pais = pl.deleteCountry(delPais);
     	
-    	return delPais;
+    	return pais;
     }
 
 }
