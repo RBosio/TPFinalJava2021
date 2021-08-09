@@ -30,12 +30,5 @@ public class Provincia {
 	public void setIdPais(int idPais) {
 		this.idPais = idPais;
 	}
-
-	@Override
-	public String toString() {
-		return "Provincia [idProvincia=" + idProvincia + ", denominacion="
-				+ denominacion + ", estado=" + estado + ", idPais=" + idPais
-				+ "]";
-	}
 	
 }
