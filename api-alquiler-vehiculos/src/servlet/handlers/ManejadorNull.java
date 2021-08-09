@@ -1,4 +1,4 @@
-package servlet;
+package servlet.handlers;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

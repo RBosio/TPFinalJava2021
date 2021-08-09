@@ -1,4 +1,4 @@
-package servlet;
+package servlet.cors;
 
 import java.io.IOException;
 
