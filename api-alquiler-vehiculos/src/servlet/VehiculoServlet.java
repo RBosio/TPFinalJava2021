@@ -17,33 +17,40 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import entities.Pais;
-import logic.PaisLogic;
+import entities.Vehiculo;
+import logic.VehiculoLogic;
 import logic.token.Token;
 
-@Path("/pais")
-public class PaisServlet {
-    private PaisLogic pl = null;
+@Path("/vehiculo")
+public class VehiculoServlet {
+    private VehiculoLogic vl = null;
 	
-    public PaisServlet() {
+    public VehiculoServlet() {
         super();
-        pl = new PaisLogic();
+        vl = new VehiculoLogic();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public LinkedList<Pais> getPaises() throws SQLException, IOException {
-    	LinkedList<Pais> paises = null;
-		paises = pl.getAll();
+	public LinkedList<Vehiculo> getVehiculoes(@Context HttpHeaders httpheaders) throws SQLException, IOException {
+    	String token = httpheaders.getHeaderString("token");
+    	if(token != null){
+    		Token.getToken(token);				
+    	}else{
+    		throw new NotAuthorizedException("Unauthorized");  		
+    	}
+    	
+    	LinkedList<Vehiculo> vehiculos = null;
+		vehiculos = vl.getAll();
 		
-		return paises;
+		return vehiculos;
 	}
     
     @GET
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-	public Pais getPais(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
+	public Vehiculo getVehiculo(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -51,17 +58,17 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Pais pais = new Pais();
-    	pais.setIdPais(id);
-		pais = pl.getOne(pais);
+    	Vehiculo vehiculo = new Vehiculo();
+    	vehiculo.setIdVeh(id);
+		vehiculo = vl.getOne(vehiculo);
 		
-		return pais;
+		return vehiculo;
 	}
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais nuevoPais(Pais nuevoPais, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Vehiculo nuevoVehiculo(Vehiculo nuevoVehiculo, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -69,16 +76,16 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	pl.newCountry(nuevoPais);
+    	vl.newVehicle(nuevoVehiculo);
     	
-    	return nuevoPais;
+    	return nuevoVehiculo;
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais actualizarPais(Pais actPais, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Vehiculo actualizarVehiculo(Vehiculo actVehiculo, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -86,16 +93,16 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	actPais.setIdPais(id);
-    	Pais pais = pl.updateCountry(actPais);
+    	actVehiculo.setIdVeh(id);
+    	Vehiculo vehiculo = vl.updateVehicle(actVehiculo);
     	
-    	return pais;
+    	return vehiculo;
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais eliminarPais(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Vehiculo eliminarVehiculo(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -103,11 +110,11 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Pais delPais = new Pais();
-    	delPais.setIdPais(id);
-    	Pais pais = pl.deleteCountry(delPais);
+    	Vehiculo delVehiculo = new Vehiculo();
+    	delVehiculo.setIdVeh(id);
+    	Vehiculo vehiculo = vl.deleteVehicle(delVehiculo);
     	
-    	return pais;
+    	return vehiculo;
     }
 
 }

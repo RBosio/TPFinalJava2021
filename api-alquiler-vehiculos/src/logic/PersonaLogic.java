@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.naming.AuthenticationException;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.auth0.jwt.JWT;
@@ -33,7 +35,7 @@ public class PersonaLogic {
 		return persona;
 	}
 	
-	public Persona login(Persona p) throws SQLException, IOException{
+	public Persona login(Persona p) throws SQLException, IOException, AuthenticationException{
 		Persona persona = pd.findByEmail(p);
 		if(BCrypt.checkpw(p.getPassword(), persona.getPassword())){
 			try {
@@ -48,7 +50,7 @@ public class PersonaLogic {
 				throw new IOException();
 			}
 		}else{
-			throw new NullPointerException();
+			throw new AuthenticationException();
 		};
 		
 		return persona;

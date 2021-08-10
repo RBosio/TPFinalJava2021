@@ -4,28 +4,26 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 
-import entities.Localidad;
+import entities.Marca;
 
-
-public class LocalidadData {
+public class MarcaData {
 	
-	public LinkedList<Localidad> getAll() throws SQLException, IOException{
+	public LinkedList<Marca> getAll() throws SQLException, IOException{
 		Statement stmt = null;
 		ResultSet rs = null;
-		LinkedList<Localidad> localidades = new LinkedList<>();
+		LinkedList<Marca> marcas = new LinkedList<>();
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("SELECT * FROM localidad");
+			rs = stmt.executeQuery("SELECT * FROM marca");
 			
 				while(rs.next()){
-					Localidad l = new Localidad();
-					l.setCodPostal(rs.getString("codPostal"));
-					l.setNombre(rs.getString("nombre"));
-					l.setEstado(rs.getBoolean("estado"));
-					l.setIdProv(rs.getInt("idProv"));
-					localidades.add(l);
-				}				
+					Marca m = new Marca();
+					m.setIdMarca(rs.getInt("idMarca"));
+					m.setDenominacion(rs.getString("denominacion"));
+					m.setEstado(rs.getBoolean("estado"));
+					marcas.add(m);
+				}
 		} catch (SQLException e) {
 			throw new SQLException();
 		} catch (IOException e) {
@@ -40,24 +38,23 @@ public class LocalidadData {
 			}
 		}
 		
-		return localidades;
+		return marcas;
 	}
 	
-	public Localidad findById(Localidad l) throws SQLException, IOException{
+	public Marca findById(Marca m) throws SQLException, IOException{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM localidad WHERE codPostal=?");
-			stmt.setString(1, l.getCodPostal());
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM marca WHERE idMarca=?");
+			stmt.setInt(1, m.getIdMarca());
 			rs = stmt.executeQuery();
 			
 			if(rs.next()){
-				l = new Localidad();
-				l.setCodPostal(rs.getString("codPostal"));
-				l.setNombre(rs.getString("nombre"));
-				l.setEstado(rs.getBoolean("estado"));
-				l.setIdProv(rs.getInt("idProv"));
+				m = new Marca();
+				m.setIdMarca(rs.getInt("idMarca"));
+				m.setDenominacion(rs.getString("denominacion"));
+				m.setEstado(rs.getBoolean("estado"));
 			} else {
 				throw new NullPointerException();
 			}
@@ -75,24 +72,28 @@ public class LocalidadData {
 			}
 		}
 		
-		return l;
+		return m;
 	}
 	
-	public Localidad newCity(Localidad nuevaL) throws SQLException, IOException{
+	public Marca newBrand(Marca nuevaM) throws SQLException, IOException{
 		PreparedStatement stmt = null;
+		ResultSet key = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO localidad(codPostal, nombre, idProv) VALUES(?, ?, ?)");
-			stmt.setString(1, nuevaL.getCodPostal());
-			stmt.setString(2, nuevaL.getNombre());
-			stmt.setInt(3, nuevaL.getIdProv());
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO marca(denominacion) VALUES(?)", Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, nuevaM.getDenominacion());
 			stmt.executeUpdate();
+			key = stmt.getGeneratedKeys();
+			if(key != null && key.next()) {
+				nuevaM.setIdMarca(key.getInt(1));
+			}
 		} catch (SQLException e) {
 			throw new SQLException();
 		} catch (IOException e) {
 			throw new IOException();
 		} finally {
 			try {
+				if (key != null) key.close();
 				if (stmt!= null) stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException | IOException e) {
@@ -100,44 +101,18 @@ public class LocalidadData {
 			}
 		}
 		
-		return nuevaL;
+		return nuevaM;
 	}
 	
-	public Localidad updateCity(Localidad actL) throws SQLException, IOException{
+	public Marca updateBrand(Marca actM) throws SQLException, IOException{
 		PreparedStatement stmt = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE localidad SET nombre=?, idProv=? WHERE codPostal=?");
-			stmt.setString(1, actL.getNombre());
-			stmt.setInt(2, actL.getIdProv());
-			stmt.setString(3, actL.getCodPostal());
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new SQLException();
-		} catch (IOException e) {
-			throw new IOException();
-		} finally {
-			try {
-				if (stmt!= null) stmt.close();
-				DbConnector.getInstancia().releaseConn();
-			} catch (SQLException | IOException e) {
-				throw new SQLException();
-			}
-		}
-		
-		return actL;
-	}
-	
-	public Localidad deleteCity(Localidad delL) throws SQLException, IOException{
-		PreparedStatement stmt = null;
-
-		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE localidad SET estado=? WHERE codPostal=?");
-			stmt.setBoolean(1, false);
-			stmt.setString(2, delL.getCodPostal());
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE marca SET denominacion=? WHERE idMarca=?");
+			stmt.setString(1, actM.getDenominacion());
+			stmt.setInt(2, actM.getIdMarca());
 			stmt.executeUpdate();
 			
-			delL.setEstado(false);
 		} catch (SQLException e) {
 			throw new SQLException();
 		} catch (IOException e) {
@@ -151,6 +126,32 @@ public class LocalidadData {
 			}
 		}
 		
-		return delL;
+		return actM;
+	}
+	
+	public Marca deleteBrand(Marca delM) throws SQLException, IOException{
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE marca SET estado=? WHERE idMarca=?");
+			stmt.setBoolean(1, false);
+			stmt.setInt(2, delM.getIdMarca());
+			stmt.executeUpdate();
+			
+			delM.setEstado(false);
+		} catch (SQLException e) {
+			throw new SQLException();
+		} catch (IOException e) {
+			throw new IOException();
+		} finally {
+			try {
+				if (stmt!= null) stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException | IOException e) {
+				throw new SQLException();
+			}
+		}
+		
+		return delM;
 	}
 }

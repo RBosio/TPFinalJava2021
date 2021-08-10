@@ -17,33 +17,40 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import entities.Pais;
-import logic.PaisLogic;
+import entities.Marca;
+import logic.MarcaLogic;
 import logic.token.Token;
 
-@Path("/pais")
-public class PaisServlet {
-    private PaisLogic pl = null;
+@Path("/marca")
+public class MarcaServlet {
+    private MarcaLogic ml = null;
 	
-    public PaisServlet() {
+    public MarcaServlet() {
         super();
-        pl = new PaisLogic();
+        ml = new MarcaLogic();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public LinkedList<Pais> getPaises() throws SQLException, IOException {
-    	LinkedList<Pais> paises = null;
-		paises = pl.getAll();
+	public LinkedList<Marca> getMarcaes(@Context HttpHeaders httpheaders) throws SQLException, IOException {
+    	String token = httpheaders.getHeaderString("token");
+    	if(token != null){
+    		Token.getToken(token);				
+    	}else{
+    		throw new NotAuthorizedException("Unauthorized");  		
+    	}
+    	
+    	LinkedList<Marca> marcas = null;
+		marcas = ml.getAll();
 		
-		return paises;
+		return marcas;
 	}
     
     @GET
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-	public Pais getPais(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
+	public Marca getMarca(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -51,17 +58,17 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Pais pais = new Pais();
-    	pais.setIdPais(id);
-		pais = pl.getOne(pais);
+    	Marca marca = new Marca();
+    	marca.setIdMarca(id);
+		marca = ml.getOne(marca);
 		
-		return pais;
+		return marca;
 	}
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais nuevoPais(Pais nuevoPais, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Marca nuevoMarca(Marca nuevoMarca, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -69,16 +76,16 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	pl.newCountry(nuevoPais);
+    	ml.newBrand(nuevoMarca);
     	
-    	return nuevoPais;
+    	return nuevoMarca;
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais actualizarPais(Pais actPais, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Marca actualizarMarca(Marca actMarca, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -86,16 +93,16 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	actPais.setIdPais(id);
-    	Pais pais = pl.updateCountry(actPais);
+    	actMarca.setIdMarca(id);
+    	Marca marca = ml.updateBrand(actMarca);
     	
-    	return pais;
+    	return marca;
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Pais eliminarPais(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Marca eliminarMarca(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -103,11 +110,11 @@ public class PaisServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Pais delPais = new Pais();
-    	delPais.setIdPais(id);
-    	Pais pais = pl.deleteCountry(delPais);
+    	Marca delMarca = new Marca();
+    	delMarca.setIdMarca(id);
+    	Marca marca = ml.deleteBrand(delMarca);
     	
-    	return pais;
+    	return marca;
     }
 
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 
+import javax.naming.AuthenticationException;
+
 import entities.Persona;
 
 
@@ -94,7 +96,7 @@ public class PersonaData {
 		return p;
 	}
 	
-	public Persona findByEmail(Persona p) throws SQLException, IOException{
+	public Persona findByEmail(Persona p) throws SQLException, IOException, AuthenticationException{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		RolData rolData = new RolData();
@@ -120,7 +122,7 @@ public class PersonaData {
 				
 				p.setRoles(rolData.findByUser(p));
 			} else {
-				throw new NullPointerException();
+				throw new AuthenticationException();
 			}
 		} catch (SQLException e) {
 			throw new SQLException();

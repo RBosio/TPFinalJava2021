@@ -13,7 +13,7 @@ public class ManejadorExcepcionesSQL implements ExceptionMapper<SQLException> {
 public Response toResponse(SQLException exception){
 
     return Response.status(Status.NOT_FOUND).
-    entity("{\"message\": \"Ocurrió un error, intente nuevamente\"}").
+    entity("{\"error\": \"Ocurrió un error, intente nuevamente\", \"registroDuplicado\": \"Dato existente\"}").
     build();
 	}
 }

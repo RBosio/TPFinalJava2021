@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import javax.naming.AuthenticationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -79,7 +80,7 @@ public class PersonaServlet {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Persona login(Persona nuevaPersona) throws SQLException, IOException{
+    public Persona login(Persona nuevaPersona) throws SQLException, IOException, AuthenticationException{
     	Persona personaLogueada = pl.login(nuevaPersona);
     	
     	return personaLogueada;
