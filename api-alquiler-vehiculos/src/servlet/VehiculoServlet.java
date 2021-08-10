@@ -32,7 +32,7 @@ public class VehiculoServlet {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public LinkedList<Vehiculo> getVehiculoes(@Context HttpHeaders httpheaders) throws SQLException, IOException {
+	public LinkedList<Vehiculo> getVehiculos(@Context HttpHeaders httpheaders) throws SQLException, IOException {
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				

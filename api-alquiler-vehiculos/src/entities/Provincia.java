@@ -5,6 +5,8 @@ public class Provincia {
 	private String denominacion;
 	private Boolean estado;
 	private int idPais;
+	
+	private Pais pais;
 	public int getIdProvincia() {
 		return idProvincia;
 	}
@@ -29,6 +31,14 @@ public class Provincia {
 	}
 	public void setIdPais(int idPais) {
 		this.idPais = idPais;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 	
 }

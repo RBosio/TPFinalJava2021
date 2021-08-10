@@ -41,10 +41,10 @@ public class PersonaServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	LinkedList<Persona> personaes = null;
-		personaes = pl.getAll();
+    	LinkedList<Persona> personas = null;
+		personas = pl.getAll();
 		
-		return personaes;
+		return personas;
 	}
     
     @GET

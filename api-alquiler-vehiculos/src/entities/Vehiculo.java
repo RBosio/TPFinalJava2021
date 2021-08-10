@@ -13,8 +13,7 @@ public class Vehiculo {
 	private Boolean estado;
 	private int idMarca;
 	
-	private String denominacionMarca;
-	private Boolean estadoMarca;
+	private Marca marca;
 
 	public int getIdVeh() {
 		return idVeh;
@@ -96,20 +95,12 @@ public class Vehiculo {
 		this.idMarca = idMarca;
 	}
 
-	public String getDenominacionMarca() {
-		return denominacionMarca;
+	public Marca getMarca() {
+		return marca;
 	}
 
-	public void setDenominacionMarca(String denominacionMarca) {
-		this.denominacionMarca = denominacionMarca;
-	}
-
-	public Boolean getEstadoMarca() {
-		return estadoMarca;
-	}
-
-	public void setEstadoMarca(Boolean estadoMarca) {
-		this.estadoMarca = estadoMarca;
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 	
 }

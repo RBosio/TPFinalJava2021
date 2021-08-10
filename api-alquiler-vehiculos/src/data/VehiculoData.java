@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 
+import entities.Marca;
 import entities.Vehiculo;
 
 public class VehiculoData {
@@ -19,6 +20,7 @@ public class VehiculoData {
 			
 				while(rs.next()){
 					Vehiculo v = new Vehiculo();
+					Marca m = new Marca();
 					v.setIdVeh(rs.getInt("idVeh"));
 					v.setDenominacion(rs.getString("v.denominacion"));
 					v.setImagen(rs.getString("imagen"));
@@ -28,8 +30,11 @@ public class VehiculoData {
 					v.setAbs(rs.getBoolean("abs"));
 					v.setPrecioDia(rs.getDouble("precioDia"));
 					v.setEstado(rs.getBoolean("estado"));
-					v.setDenominacionMarca(rs.getString("m.denominacion"));
-					v.setEstadoMarca(rs.getBoolean("m.estado"));
+					
+					m.setDenominacion(rs.getString("m.denominacion"));
+					m.setEstado(rs.getBoolean("m.estado"));
+					v.setMarca(m);
+					
 					vehiculos.add(v);
 				}
 		} catch (SQLException e) {
@@ -59,6 +64,7 @@ public class VehiculoData {
 			rs = stmt.executeQuery();
 			
 			if(rs.next()){
+				Marca m = new Marca();
 				v.setIdVeh(rs.getInt("idVeh"));
 				v.setDenominacion(rs.getString("v.denominacion"));
 				v.setImagen(rs.getString("imagen"));
@@ -68,7 +74,10 @@ public class VehiculoData {
 				v.setAbs(rs.getBoolean("abs"));
 				v.setPrecioDia(rs.getDouble("precioDia"));
 				v.setEstado(rs.getBoolean("estado"));
-				v.setDenominacionMarca(rs.getString("m.denominacion"));
+
+				m.setDenominacion(rs.getString("m.denominacion"));
+				m.setEstado(rs.getBoolean("m.estado"));
+				v.setMarca(m);
 			} else {
 				throw new NullPointerException();
 			}
@@ -140,7 +149,6 @@ public class VehiculoData {
 			stmt.setInt(8, actV.getIdMarca());
 			stmt.setInt(9, actV.getIdVeh());
 			stmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			throw new SQLException();
 		} catch (IOException e) {

@@ -6,7 +6,10 @@ import java.util.LinkedList;
 
 import javax.naming.AuthenticationException;
 
+import entities.Localidad;
+import entities.Pais;
 import entities.Persona;
+import entities.Provincia;
 
 
 public class PersonaData {
@@ -16,13 +19,19 @@ public class PersonaData {
 		ResultSet rs = null;
 		LinkedList<Persona> personas = new LinkedList<>();
 		RolData rolData = new RolData();
+		Localidad l = null;
+		Provincia pro = null;
+		Pais pais = null;
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("SELECT dni, nombre, apellido, email, telefono, estado, codPostal FROM persona");
+			rs = stmt.executeQuery("SELECT dni, p.nombre, apellido, email, telefono, p.estado, l.codPostal, l.nombre, pro.denominacion, pais.denominacion FROM persona p INNER JOIN localidad l ON p.codPostal = l.codPostal INNER JOIN provincia pro ON l.idProv = pro.idProv INNER JOIN pais ON pro.idPais = pais.idPais");
 			
 				while(rs.next()){
 					Persona p = new Persona();
+					l = new Localidad();
+					pro = new Provincia();
+					pais = new Pais();
 					p.setDni(rs.getString("dni"));
 					p.setNombre(rs.getString("nombre"));
 					p.setApellido(rs.getString("apellido"));
@@ -30,6 +39,13 @@ public class PersonaData {
 					p.setTelefono(rs.getString("telefono"));
 					p.setEstado(rs.getBoolean("estado"));
 					p.setCodPostal(rs.getString("codPostal"));
+					
+					pais.setDenominacion(rs.getString("pais.denominacion"));
+					pro.setDenominacion(rs.getString("pro.denominacion"));
+					l.setNombre(rs.getString("l.nombre"));
+					pro.setPais(pais);
+					l.setProvincia(pro);
+					p.setLoc(l);
 					
 					p.setRoles(rolData.findByUser(p));
 					
@@ -56,6 +72,9 @@ public class PersonaData {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		RolData rolData = new RolData();
+		Localidad l = null;
+		Provincia pro = null;
+		Pais pais = null;
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT dni, p.nombre, apellido, email, telefono, p.estado, l.codPostal, l.nombre, pro.denominacion, pais.denominacion FROM persona p INNER JOIN localidad l ON p.codPostal = l.codPostal INNER JOIN provincia pro ON l.idProv = pro.idProv INNER JOIN pais ON pro.idPais = pais.idPais WHERE dni=?");
@@ -64,6 +83,10 @@ public class PersonaData {
 			
 			if(rs.next()){
 				p = new Persona();
+				l = new Localidad();
+				pro = new Provincia();
+				pais = new Pais();
+				
 				p.setDni(rs.getString("dni"));
 				p.setNombre(rs.getString("nombre"));
 				p.setApellido(rs.getString("apellido"));
@@ -71,9 +94,13 @@ public class PersonaData {
 				p.setTelefono(rs.getString("telefono"));
 				p.setEstado(rs.getBoolean("estado"));
 				p.setCodPostal(rs.getString("l.codPostal"));
-				p.setNomLoc(rs.getString("l.nombre"));
-				p.setDenomProv(rs.getString("pro.denominacion"));
-				p.setApellido(rs.getString("pais.denominacion"));
+				
+				pais.setDenominacion(rs.getString("pais.denominacion"));
+				pro.setDenominacion(rs.getString("pro.denominacion"));
+				l.setNombre(rs.getString("l.nombre"));
+				pro.setPais(pais);
+				l.setProvincia(pro);
+				p.setLoc(l);
 				
 				p.setRoles(rolData.findByUser(p));
 			} else {
@@ -100,6 +127,9 @@ public class PersonaData {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		RolData rolData = new RolData();
+		Localidad l = null;
+		Provincia pro = null;
+		Pais pais = null;
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT dni, p.nombre, apellido, email, password, telefono, p.estado, l.codPostal, l.nombre, pro.denominacion, pais.denominacion FROM persona p INNER JOIN localidad l ON p.codPostal = l.codPostal INNER JOIN provincia pro ON l.idProv = pro.idProv INNER JOIN pais ON pro.idPais = pais.idPais WHERE email=?");
@@ -108,6 +138,10 @@ public class PersonaData {
 			
 			if(rs.next()){
 				p = new Persona();
+				l = new Localidad();
+				pro = new Provincia();
+				pais = new Pais();
+				
 				p.setDni(rs.getString("dni"));
 				p.setNombre(rs.getString("nombre"));
 				p.setApellido(rs.getString("apellido"));
@@ -116,9 +150,13 @@ public class PersonaData {
 				p.setTelefono(rs.getString("telefono"));
 				p.setEstado(rs.getBoolean("estado"));
 				p.setCodPostal(rs.getString("l.codPostal"));
-				p.setNomLoc(rs.getString("l.nombre"));
-				p.setDenomProv(rs.getString("pro.denominacion"));
-				p.setApellido(rs.getString("pais.denominacion"));
+
+				pais.setDenominacion(rs.getString("pais.denominacion"));
+				pro.setDenominacion(rs.getString("pro.denominacion"));
+				l.setNombre(rs.getString("l.nombre"));
+				pro.setPais(pais);
+				l.setProvincia(pro);
+				p.setLoc(l);
 				
 				p.setRoles(rolData.findByUser(p));
 			} else {

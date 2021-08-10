@@ -13,9 +13,7 @@ public class Persona {
 	private Boolean estado;
 	private String codPostal;
 	
-	private String nomLoc;
-	private String denomProv;
-	private String denomPais;
+	private Localidad loc;
 	private LinkedList<Rol> roles;
 	private String token;
 	
@@ -67,23 +65,11 @@ public class Persona {
 	public void setCodPostal(String codPostal) {
 		this.codPostal = codPostal;
 	}
-	public String getNomLoc() {
-		return nomLoc;
+	public Localidad getLoc() {
+		return loc;
 	}
-	public void setNomLoc(String nomLoc) {
-		this.nomLoc = nomLoc;
-	}
-	public String getDenomProv() {
-		return denomProv;
-	}
-	public void setDenomProv(String denomProv) {
-		this.denomProv = denomProv;
-	}
-	public String getDenomPais() {
-		return denomPais;
-	}
-	public void setDenomPais(String denomPais) {
-		this.denomPais = denomPais;
+	public void setLoc(Localidad loc) {
+		this.loc = loc;
 	}
 	public LinkedList<Rol> getRoles() {
 		return roles;

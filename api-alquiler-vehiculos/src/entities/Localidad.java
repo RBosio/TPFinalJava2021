@@ -7,6 +7,8 @@ public class Localidad {
 	private Boolean estado;
 	private int idProv;
 	
+	private Provincia provincia;
+	
 	public String getCodPostal() {
 		return codPostal;
 	}
@@ -30,6 +32,12 @@ public class Localidad {
 	}
 	public void setIdProv(int idProv) {
 		this.idProv = idProv;
+	}
+	public Provincia getProvincia() {
+		return provincia;
+	}
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
 	}
 	
 }
