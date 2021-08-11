@@ -64,6 +64,22 @@ public class VehiculoServlet {
 		
 		return vehiculo;
 	}
+    
+    @GET
+    @Path("/{fecha_hora_ini}/{fecha_hora_fin}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public LinkedList<Vehiculo> getVehiculosDisponiblesPorFecha(@PathParam("fecha_hora_ini") String fechaHoraIni, @PathParam("fecha_hora_fin") String fechaHoraFin, @Context HttpHeaders httpheaders) throws SQLException, IOException {
+    	String token = httpheaders.getHeaderString("token");
+    	if(token != null){
+    		Token.getToken(token);				
+    	}else{
+    		throw new NotAuthorizedException("Unauthorized");  		
+    	}
+    	LinkedList<Vehiculo> vehiculos = vl.getVehiclesAvailable(fechaHoraIni, fechaHoraFin);
+    	
+		return vehiculos;
+	}
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

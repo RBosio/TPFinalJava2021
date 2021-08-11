@@ -74,7 +74,7 @@ public class PersonaLogic {
 	}
 	
 	public Persona deleteUser(Persona p) throws SQLException, IOException{
-		Persona persona = pd.deleteUser(pd.findByDni(p));
+		Persona persona = pd.deleteUser(p);
 		
 		return persona;
 	}

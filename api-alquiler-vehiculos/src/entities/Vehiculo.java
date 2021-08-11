@@ -10,6 +10,7 @@ public class Vehiculo {
 	private Boolean aireAc;
 	private Boolean abs;
 	private Double precioDia;
+	private int cantidad;
 	private Boolean estado;
 	private int idMarca;
 	
@@ -77,6 +78,14 @@ public class Vehiculo {
 
 	public void setPrecioDia(Double precioDia) {
 		this.precioDia = precioDia;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	public Boolean getEstado() {

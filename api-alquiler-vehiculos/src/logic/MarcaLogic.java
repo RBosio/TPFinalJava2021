@@ -39,7 +39,7 @@ public class MarcaLogic {
 	}
 	
 	public Marca deleteBrand(Marca m) throws SQLException, IOException{
-		Marca marca = md.deleteBrand(md.findById(m));
+		Marca marca = md.deleteBrand(m);
 		
 		return marca;
 	}

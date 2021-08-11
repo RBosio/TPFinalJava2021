@@ -39,7 +39,7 @@ public class LocalidadLogic {
 	}
 	
 	public Localidad deleteCity(Localidad l) throws SQLException, IOException{
-		Localidad localidad = ld.deleteCity(ld.findById(l));
+		Localidad localidad = ld.deleteCity(l);
 		
 		return localidad;
 	}

@@ -40,7 +40,7 @@ public class ProvinciaLogic {
 	
 	
 	public Provincia deleteProvince(Provincia p) throws SQLException, IOException{
-		Provincia provincia = pd.deleteProvince(pd.findById(p));
+		Provincia provincia = pd.deleteProvince(p);
 		
 		return provincia;
 	}

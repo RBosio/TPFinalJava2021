@@ -39,7 +39,7 @@ public class PaisLogic {
 	}
 	
 	public Pais deleteCountry(Pais p) throws SQLException, IOException{
-		Pais pais = pd.deleteCountry(pd.findById(p));
+		Pais pais = pd.deleteCountry(p);
 		
 		return pais;
 	}
