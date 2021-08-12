@@ -20,10 +20,12 @@ import javax.mail.internet.MimeMultipart;
 
 import data.AlquilerData;
 import data.CoberturaData;
+import data.ExtraData;
 import data.PersonaData;
 import data.VehiculoData;
 import entities.Alquiler;
 import entities.Cobertura;
+import entities.Extra;
 import entities.Persona;
 import entities.Vehiculo;
 
@@ -33,6 +35,7 @@ public class AlquilerLogic {
 	VehiculoData vd;
 	PersonaData pd;
 	CoberturaData cd;
+	ExtraData ed;
 	String email;
 	String pass;
 	public AlquilerLogic(){
@@ -40,6 +43,7 @@ public class AlquilerLogic {
 		vd = new VehiculoData();
 		pd = new PersonaData();
 		cd = new CoberturaData();
+		ed = new ExtraData();
 		try {
 			String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
 			String appConfigPath = rootPath + "config.properties";
@@ -63,24 +67,26 @@ public class AlquilerLogic {
 	
 	
 	public Alquiler newRent(Alquiler a) throws SQLException, IOException{
+		for(Extra e : a.getExtras()){
+			System.out.println(e.getIdExtra());
+		}
 		Alquiler alquiler = ad.newRent(a);
 		int id;
 		
-		Vehiculo v = new Vehiculo();
-		v.setIdVeh(a.getIdVeh());
-		vd.reducirCantidad(v);
-		
 		alquiler = ad.findByDni(a);
-		v = alquiler.getVehiculo();
+		Vehiculo v = alquiler.getVehiculo();
 		
 		Persona persona = new Persona();
 		persona = alquiler.getPersona();
 		persona.setDni(a.getDni());
+		
 		id = ad.getIdFactura();
+		
 		long periodo = Duration.between(a.getFechaHoraInicio(), a.getFechaHoraFin()).toDays();
 		
 		Cobertura cobertura = new Cobertura();
 		cobertura = alquiler.getCobertura();
+		
 		
 		envioEmail(persona, cobertura, a, id, periodo, v);
 		

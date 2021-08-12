@@ -9,31 +9,30 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import entities.Alquiler;
 import entities.Extra;
-import entities.Persona;
-import entities.Rol;
-import logic.AlquilerLogic;
+import logic.ExtraLogic;
 import logic.token.Token;
 
-@Path("/alquiler")
-public class AlquilerServlet {
-    private AlquilerLogic al = null;
+@Path("/extra")
+public class ExtraServlet {
+    private ExtraLogic cl = null;
 	
-    public AlquilerServlet() {
+    public ExtraServlet() {
         super();
-        al = new AlquilerLogic();
+        cl = new ExtraLogic();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-	public LinkedList<Alquiler> getAlquileres(@Context HttpHeaders httpheaders) throws SQLException, IOException {
+	public LinkedList<Extra> getExtraes(@Context HttpHeaders httpheaders) throws SQLException, IOException {
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -41,48 +40,35 @@ public class AlquilerServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	LinkedList<Alquiler> alquileres = null;
-		alquileres = al.getAll();
+    	LinkedList<Extra> extras = null;
+		extras = cl.getAll();
 		
-		return alquileres;
+		return extras;
+	}
+    
+    @GET
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Extra getExtra(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
+    	String token = httpheaders.getHeaderString("token");
+    	if(token != null){
+    		Token.getToken(token);				
+    	}else{
+    		throw new NotAuthorizedException("Unauthorized");  		
+    	}
+    	
+    	Extra extra = new Extra();
+    	extra.setIdExtra(id);
+		extra = cl.getOne(extra);
+		
+		return extra;
 	}
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Alquiler nuevoAlquiler(Alquiler nuevoAlquiler, @Context HttpHeaders httpheaders) throws SQLException, IOException{
-    	String token = httpheaders.getHeaderString("token");
-    	if(token != null){
-    		Token.getToken(token);				
-    	}else{
-    		throw new NotAuthorizedException("Unauthorized");  		
-    	}
-    	Alquiler alquiler = al.newRent(nuevoAlquiler);
-    	
-    	return alquiler;
-    }
-    
-    @POST
-    @Path("/confirmar")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Alquiler confirmarAlquiler(Alquiler confirmarAlq, @Context HttpHeaders httpheaders) throws SQLException, IOException{
-    	String token = httpheaders.getHeaderString("token");
-    	if(token != null){
-    		Token.getToken(token);				
-    	}else{
-    		throw new NotAuthorizedException("Unauthorized");  		
-    	}
-    	Alquiler alquiler = al.confirmRent(confirmarAlq);
-    	
-    	return alquiler;
-    }
-    
-    @POST
-    @Path("/devolver")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Alquiler devolucionVehiculo(Alquiler terminarAlq, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Extra nuevoExtra(Extra nuevoExtra, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -90,14 +76,16 @@ public class AlquilerServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Alquiler alquiler = al.finishRent(terminarAlq);
+    	cl.newExtra(nuevoExtra);
     	
-    	return alquiler;
+    	return nuevoExtra;
     }
 
-    @DELETE
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Alquiler cancelarAlq(Alquiler cancelarAlq, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    public Extra actualizarExtra(Extra actExtra, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -105,9 +93,28 @@ public class AlquilerServlet {
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
     	
-    	Alquiler alquiler = al.cancelRent(cancelarAlq);
+    	actExtra.setIdExtra(id);
+    	Extra extra = cl.updateExtra(actExtra);
     	
-    	return alquiler;
+    	return extra;
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Extra eliminarExtra(@PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException{
+    	String token = httpheaders.getHeaderString("token");
+    	if(token != null){
+    		Token.getToken(token);				
+    	}else{
+    		throw new NotAuthorizedException("Unauthorized");  		
+    	}
+    	
+    	Extra delExtra = new Extra();
+    	delExtra.setIdExtra(id);
+    	Extra extra = cl.deleteExtra(delExtra);
+    	
+    	return extra;
     }
 
 }

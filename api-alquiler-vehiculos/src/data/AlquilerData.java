@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import entities.Alquiler;
 import entities.Cobertura;
+import entities.Extra;
 import entities.Marca;
 import entities.Persona;
 import entities.Vehiculo;
@@ -78,9 +79,19 @@ public class AlquilerData {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		Alquiler a = null;
+		LinkedList<Extra> extras = new LinkedList<Extra>();
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM alquiler a INNER JOIN persona p ON a.dni = p.dni INNER JOIN vehiculo v ON a.idVeh = v.idVeh INNER JOIN cobertura c ON a.idCob = c.idCob INNER JOIN marca m ON v.idMarca = m.idMarca WHERE p.dni=? AND fechaHoraInicio=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement(
+					"SELECT * "+
+					"FROM alquiler a "+
+					"INNER JOIN persona p ON a.dni = p.dni "+
+					"INNER JOIN vehiculo v ON a.idVeh = v.idVeh "+
+					"INNER JOIN cobertura c ON a.idCob = c.idCob "+
+					"INNER JOIN marca m ON v.idMarca = m.idMarca "+
+					"LEFT JOIN alquiler_extra ae ON a.dni = ae.dni AND a.fechaHoraInicio = ae.fechaHoraInicio "+
+					"LEFT JOIN extra e ON ae.idExtra = e.idExtra "+
+					"WHERE p.dni=? AND a.fechaHoraInicio=?");
 			stmt.setString(1, alq.getDni());
 			stmt.setTimestamp(2, Timestamp.valueOf(alq.getFechaHoraInicio()));
 			rs = stmt.executeQuery();
@@ -90,6 +101,7 @@ public class AlquilerData {
 				Cobertura cob = new Cobertura();
 				Persona per = new Persona();
 				Vehiculo veh = new Vehiculo();
+				Extra extra = new Extra();
 				
 				a.setDni(rs.getString("p.dni"));
 				a.setFechaHoraInicio(rs.getTimestamp("fechaHoraInicio").toLocalDateTime());
@@ -117,7 +129,18 @@ public class AlquilerData {
 				m.setDenominacion(rs.getString("m.denominacion"));
 				veh.setMarca(m);
 				a.setVehiculo(veh);
+				
+				extra.setDescripcion(rs.getString("e.descripcion"));
+				extra.setPrecioDia(rs.getDouble("e.precioDia"));
+				extras.add(extra);
 			}
+			while (rs.next()) {
+				Extra extra = new Extra();
+				extra.setDescripcion(rs.getString("e.descripcion"));
+				extra.setPrecioDia(rs.getDouble("e.precioDia"));
+				extras.add(extra);
+			}
+			a.setExtras(extras);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new SQLException();
@@ -138,6 +161,8 @@ public class AlquilerData {
 	public Alquiler newRent(Alquiler nuevoA) throws SQLException, IOException{
 		PreparedStatement stmt = null;
 		ResultSet key = null;
+		ExtraData extraData = new ExtraData();
+		VehiculoData vd = new VehiculoData();
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO alquiler(dni, fechaHoraInicio, idVeh, fechaHoraFin, costoTotal, idCob) VALUES(?, ?, ?, ?, ?, ?)");
@@ -148,6 +173,12 @@ public class AlquilerData {
 			stmt.setDouble(5, nuevoA.getCostoTotal());
 			stmt.setInt(6, nuevoA.getIdCob());
 			stmt.executeUpdate();
+			
+			extraData.newAlquilerExtra(nuevoA);
+			
+			Vehiculo v = new Vehiculo();
+			v.setIdVeh(nuevoA.getIdVeh());
+			vd.reducirCantidad(v);
 		} catch (SQLException e) {
 			throw new SQLException();
 		} catch (IOException e) {

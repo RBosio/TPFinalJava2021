@@ -1,6 +1,7 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 
 public class Alquiler {
 	private String dni;
@@ -14,6 +15,7 @@ public class Alquiler {
 	private Persona persona;
 	private Vehiculo vehiculo;
 	private Cobertura cobertura;
+	private LinkedList<Extra> extras;
 	
 	public String getDni() {
 		return dni;
@@ -74,6 +76,12 @@ public class Alquiler {
 	}
 	public void setCobertura(Cobertura cobertura) {
 		this.cobertura = cobertura;
+	}
+	public LinkedList<Extra> getExtras() {
+		return extras;
+	}
+	public void setExtras(LinkedList<Extra> extras) {
+		this.extras = extras;
 	}
 	
 }
