@@ -33,12 +33,11 @@ public class AlquilerData {
 				a.setIdVeh(rs.getInt("v.idVeh"));
 				a.setFechaHoraFin(rs.getTimestamp("fechaHoraFin").toLocalDateTime());
 				a.setEstado(rs.getString("estado"));
-				//a.setFechaHoraCancelacion(rs.getTimestamp("fechaHoraCancelacion").toLocalDateTime());
 				a.setCostoTotal(rs.getDouble("costoTotal"));
 				a.setIdCob(rs.getInt("c.idCob"));
 				
 				cob.setDescripcion(rs.getString("c.descripcion"));
-				cob.setPrecioDia(rs.getDouble("precioDia"));
+				cob.setPrecioDia(rs.getDouble("c.precioDia"));
 				cob.setEstado(rs.getBoolean("c.estado"));
 				a.setCobertura(cob);
 				
@@ -78,21 +77,49 @@ public class AlquilerData {
 	public Alquiler findByDni(Alquiler alq) throws SQLException, IOException{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		Alquiler a = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM alquiler WHERE dni=? AND fechaHoraInicio=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM alquiler a INNER JOIN persona p ON a.dni = p.dni INNER JOIN vehiculo v ON a.idVeh = v.idVeh INNER JOIN cobertura c ON a.idCob = c.idCob INNER JOIN marca m ON v.idMarca = m.idMarca WHERE p.dni=? AND fechaHoraInicio=?");
 			stmt.setString(1, alq.getDni());
 			stmt.setTimestamp(2, Timestamp.valueOf(alq.getFechaHoraInicio()));
 			rs = stmt.executeQuery();
 			
 			if(rs.next()){
-				alq.setIdVeh(rs.getInt("idVeh"));
-				alq.setFechaHoraFin(rs.getTimestamp("fechaHoraFin").toLocalDateTime());
-				alq.setEstado(rs.getString("estado"));
-				alq.setCostoTotal(rs.getDouble("costoTotal"));
-				alq.setIdCob(rs.getInt("idCob"));
+				a = new Alquiler();
+				Cobertura cob = new Cobertura();
+				Persona per = new Persona();
+				Vehiculo veh = new Vehiculo();
+				
+				a.setDni(rs.getString("p.dni"));
+				a.setFechaHoraInicio(rs.getTimestamp("fechaHoraInicio").toLocalDateTime());
+				a.setIdVeh(rs.getInt("v.idVeh"));
+				a.setFechaHoraFin(rs.getTimestamp("fechaHoraFin").toLocalDateTime());
+				a.setEstado(rs.getString("estado"));
+				a.setCostoTotal(rs.getDouble("costoTotal"));
+				a.setIdCob(rs.getInt("c.idCob"));
+				
+				cob.setDescripcion(rs.getString("c.descripcion"));
+				cob.setPrecioDia(rs.getDouble("c.precioDia"));
+				cob.setEstado(rs.getBoolean("c.estado"));
+				a.setCobertura(cob);
+				
+				per.setApellido(rs.getString("apellido"));
+				per.setNombre(rs.getString("nombre"));
+				per.setEmail(rs.getString("email"));
+				per.setTelefono(rs.getString("telefono"));
+				a.setPersona(per);
+				
+				veh.setDenominacion(rs.getString("v.denominacion"));
+				veh.setPrecioDia(rs.getDouble("v.precioDia"));
+				veh.setImagen(rs.getString("imagen"));
+				Marca m = new Marca();
+				m.setDenominacion(rs.getString("m.denominacion"));
+				veh.setMarca(m);
+				a.setVehiculo(veh);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new SQLException();
 		} catch (IOException e) {
 			throw new IOException();
@@ -105,7 +132,7 @@ public class AlquilerData {
 				throw new SQLException();
 			}
 		}
-		return alq;
+		return a;
 	}
 	
 	public Alquiler newRent(Alquiler nuevoA) throws SQLException, IOException{
@@ -217,5 +244,36 @@ public class AlquilerData {
 		}
 		
 		return delA;
+	}
+	
+	public int getIdFactura() throws SQLException, IOException{
+		Statement stmt = null;
+		ResultSet rs = null;
+		int id = 0;
+		
+		try {
+			stmt = DbConnector.getInstancia().getConn().createStatement();
+			 
+			rs = stmt.executeQuery("SELECT COUNT(*) id FROM alquiler");
+			
+			if(rs.next()){
+				id = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException();
+		} catch (IOException e) {
+			throw new IOException();
+		} finally {
+			try {
+				if(rs != null ) rs.close();
+				if(stmt!= null ) stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException | IOException e) {
+				throw new SQLException();
+			}
+		}
+		
+		return id;
 	}
 }

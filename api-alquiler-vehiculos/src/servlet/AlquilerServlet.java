@@ -54,7 +54,6 @@ public class AlquilerServlet {
     	}else{
     		throw new NotAuthorizedException("Unauthorized");  		
     	}
-    	
     	Alquiler alquiler = al.newRent(nuevoAlquiler);
     	
     	return alquiler;

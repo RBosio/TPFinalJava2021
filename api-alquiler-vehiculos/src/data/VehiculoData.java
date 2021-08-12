@@ -71,8 +71,6 @@ public class VehiculoData {
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(query);
 			stmt.setTimestamp(1, Timestamp.valueOf(a.getFechaHoraFin()));
 			stmt.setTimestamp(2, Timestamp.valueOf(a.getFechaHoraInicio()));
-			System.out.println(a.getFechaHoraInicio());
-			System.out.println(a.getFechaHoraFin());
 			rs = stmt.executeQuery();
 			
 			while(rs.next()){
