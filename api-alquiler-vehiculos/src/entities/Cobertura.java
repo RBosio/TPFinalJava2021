@@ -1,15 +1,15 @@
 package entities;
 
 public class Cobertura {
-	private String idCob;
+	private int idCob;
 	private String descripcion;
 	private double precioDia;
 	private boolean estado;
 	
-	public String getIdCob() {
+	public int getIdCob() {
 		return idCob;
 	}
-	public void setIdCob(String idCob) {
+	public void setIdCob(int idCob) {
 		this.idCob = idCob;
 	}
 	public String getDescripcion() {
