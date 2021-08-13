@@ -38,6 +38,7 @@ public class AlquilerLogic {
 	ExtraData ed;
 	String email;
 	String pass;
+	Double total = 0.0;
 	public AlquilerLogic(){
 		ad = new AlquilerData();
 		vd = new VehiculoData();
@@ -67,28 +68,29 @@ public class AlquilerLogic {
 	
 	
 	public Alquiler newRent(Alquiler a) throws SQLException, IOException{
-		for(Extra e : a.getExtras()){
-			System.out.println(e.getIdExtra());
-		}
 		Alquiler alquiler = ad.newRent(a);
+		Vehiculo vehiculo = new Vehiculo();
+		Persona persona = new Persona();
+		Cobertura cobertura = new Cobertura();
+		LinkedList<Extra> extras = new LinkedList<Extra>();
 		int id;
 		
 		alquiler = ad.findByDni(a);
-		Vehiculo v = alquiler.getVehiculo();
 		
-		Persona persona = new Persona();
+		vehiculo = alquiler.getVehiculo();
 		persona = alquiler.getPersona();
-		persona.setDni(a.getDni());
+		cobertura = alquiler.getCobertura();
+		extras = alquiler.getExtras();
 		
+		persona.setDni(a.getDni());
 		id = ad.getIdFactura();
+		
 		
 		long periodo = Duration.between(a.getFechaHoraInicio(), a.getFechaHoraFin()).toDays();
 		
-		Cobertura cobertura = new Cobertura();
-		cobertura = alquiler.getCobertura();
 		
 		
-		envioEmail(persona, cobertura, a, id, periodo, v);
+		envioEmail(persona, cobertura, a, id, periodo, vehiculo, extras);
 		
 		
 		return alquiler;
@@ -121,7 +123,7 @@ public class AlquilerLogic {
 		return alquiler;
 	}
 	
-	public void envioEmail(Persona persona, Cobertura cobertura, Alquiler a, int id, long periodo, Vehiculo v){
+	public void envioEmail(Persona persona, Cobertura cobertura, Alquiler a, int id, long periodo, Vehiculo v, LinkedList<Extra> extras) throws SQLException, IOException{
 		
 		Properties props = new Properties();
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -135,7 +137,7 @@ public class AlquilerLogic {
 		String correoRemitente = email;
 		String passwordRemitente = pass;
 		String correoReceptor = "roccomatumbo@gmail.com";
-		String asunto = "Factura";
+		String asunto = "Factura de alquiler de vehiculo - RappiCars";
 		
 		 try {
 			 MimeMessage message = new MimeMessage(session);
@@ -148,7 +150,7 @@ public class AlquilerLogic {
 			 
 			 BodyPart messageBodyPart = new MimeBodyPart();
 			 String htmlText = 
-			 "<div style=\"text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 18px;\">"+
+			 "<div style=\"text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: black;\">"+
 		        "<h1 style=\"text-align: left; font-size: 30px;\">RappiCars</h1>"+
 		        "<table style=\"width: 100%; margin-top: 40px;\">"+
 		            "<tr style=\"\">"+
@@ -174,8 +176,8 @@ public class AlquilerLogic {
 		        "<table style=\"width: 100%; margin-top: 40px;\">"+
 		            "<tr style=\"color: white; background-color: rgb(124, 124, 124);\">"+
 		                "<th style=\"border-bottom: 1px solid #ddd;\">Descripcion</th>"+
-		                "<th style=\"border-bottom: 1px solid #ddd;\">Precio por dia</th>"+
-		                "<th style=\"border-bottom: 1px solid #ddd; width: 150px;\">Importe</th>"+
+		                "<th style=\"border-bottom: 1px solid #ddd; width: 200px;\">Precio por dia ($)</th>"+
+		                "<th style=\"border-bottom: 1px solid #ddd; width: 150px;\">Importe ($)</th>"+
 		            "</tr>"+
 		            "<tr>"+
 		                "<td style=\"border-bottom: 1px solid #ddd;\">"+v.getDenominacion()+"</td>"+
@@ -187,19 +189,20 @@ public class AlquilerLogic {
 		                "<td style=\"border-bottom: 1px solid #ddd;\">"+cobertura.getPrecioDia()+"</td>"+
 		                "<td style=\"border-bottom: 1px solid #ddd;\">"+calcularImporte(cobertura.getPrecioDia(), periodo)+"</td>"+
 		            "</tr>"+
+		            imprimirExtras(extras, periodo, a)+
 		        "</table>"+
 		        "<table style=\"width: 40%; margin-left: 60%;\">"+
 		            "<tr>"+
 		                "<th style=\"border-bottom: 1px solid #ddd; font-weight: bold; color: white; background-color: rgb(124, 124, 124);\">Subtotal</th>"+
-		                "<th style=\"border-bottom: 1px solid #ddd; font-weight: 300; width: 150px;\">Precio por dia</th>"+
+		                "<th style=\"border-bottom: 1px solid #ddd; font-weight: 300; width: 150px;\">"+devolverSubTotal(total)+"</th>"+
 		            "</tr>"+
 		            "<tr>"+
 		                "<td style=\"border-bottom: 1px solid #ddd; font-weight: bold; color: white; background-color: rgb(124, 124, 124);\">IVA (21%)</td>"+
-		                "<td style=\"border-bottom: 1px solid #ddd;\">3000</td>"+
+		                "<td style=\"border-bottom: 1px solid #ddd;\">"+calcularIva(total, a)+"</td>"+
 		            "</tr>"+
 		            "<tr style=\"color: white; background-color: rgb(77, 77, 77); height: 30px;\">"+
 		                "<td style=\"border-bottom: 1px solid #ddd; font-weight: bold;\">Total</td>"+
-		                "<td style=\"border-bottom: 1px solid #ddd;\">300</td>"+
+		                "<td style=\"border-bottom: 1px solid #ddd; font-weight: bold; background-color: rgb(219, 0, 0)\">"+total+"</td>"+
 		            "</tr>"+
 		        "</table>"+
 		     "</div>";
@@ -217,6 +220,33 @@ public class AlquilerLogic {
 	}
 	
 	public double calcularImporte(double precioDia, long periodo){
+		total += precioDia * periodo;
 		return precioDia * periodo;
+	}
+	
+	public String imprimirExtras(LinkedList<Extra> extras, long periodo, Alquiler alq){
+		String s = "";
+		for(Extra e: extras){
+			s +="<tr>"+
+					"<td style=\"border-bottom: 1px solid #ddd;\">"+e.getDescripcion()+"</td>"+
+					"<td style=\"border-bottom: 1px solid #ddd;\">"+e.getPrecioDia()+"</td>"+
+					"<td style=\"border-bottom: 1px solid #ddd;\">"+calcularImporte(e.getPrecioDia(), periodo)+"</td>"+
+				"</tr>";
+		}
+		return s;
+	}
+	
+	public double devolverSubTotal(Double tot){
+		double subTotal = tot;
+		return subTotal;
+	}
+	
+	public double calcularIva(Double tot, Alquiler alq) throws SQLException, IOException{
+		double iva = 21 * tot / 100;
+		total += iva;
+		alq.setCostoTotal(total);
+		ad.setearCostoTotal(alq);
+		
+		return iva;
 	}
 }

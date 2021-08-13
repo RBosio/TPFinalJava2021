@@ -165,13 +165,12 @@ public class AlquilerData {
 		VehiculoData vd = new VehiculoData();
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO alquiler(dni, fechaHoraInicio, idVeh, fechaHoraFin, costoTotal, idCob) VALUES(?, ?, ?, ?, ?, ?)");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO alquiler(dni, fechaHoraInicio, idVeh, fechaHoraFin, idCob) VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, nuevoA.getDni());
 			stmt.setTimestamp(2, Timestamp.valueOf(nuevoA.getFechaHoraInicio()));
 			stmt.setInt(3, nuevoA.getIdVeh());
 			stmt.setTimestamp(4, Timestamp.valueOf(nuevoA.getFechaHoraFin()));
-			stmt.setDouble(5, nuevoA.getCostoTotal());
-			stmt.setInt(6, nuevoA.getIdCob());
+			stmt.setInt(5, nuevoA.getIdCob());
 			stmt.executeUpdate();
 			
 			extraData.newAlquilerExtra(nuevoA);
@@ -194,6 +193,31 @@ public class AlquilerData {
 		}
 		
 		return nuevoA;
+	}
+	
+	public void setearCostoTotal(Alquiler nuevoA) throws SQLException, IOException{
+		PreparedStatement stmt = null;
+		ResultSet key = null;
+
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE alquiler SET costoTotal=? WHERE dni=? AND fechaHoraInicio=?");
+			stmt.setDouble(1, nuevoA.getCostoTotal());
+			stmt.setString(2, nuevoA.getDni());
+			stmt.setTimestamp(3, Timestamp.valueOf(nuevoA.getFechaHoraInicio()));
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLException();
+		} catch (IOException e) {
+			throw new IOException();
+		} finally {
+			try {
+				if (key != null) key.close();
+				if (stmt!= null) stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException | IOException e) {
+				throw new SQLException();
+			}
+		}
 	}
 	
 	public Alquiler confirmRent(Alquiler confA) throws SQLException, IOException{
