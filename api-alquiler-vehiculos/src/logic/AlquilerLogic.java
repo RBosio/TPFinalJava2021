@@ -104,6 +104,7 @@ public class AlquilerLogic {
 	
 	public Alquiler finishRent(Alquiler a) throws SQLException, IOException{
 		Alquiler alquiler = ad.finishRent(a);
+		alquiler = ad.findByDni(a);
 		
 		Vehiculo v = new Vehiculo();
 		v.setIdVeh(alquiler.getIdVeh());
@@ -136,7 +137,7 @@ public class AlquilerLogic {
 		
 		String correoRemitente = email;
 		String passwordRemitente = pass;
-		String correoReceptor = "roccomatumbo@gmail.com";
+		String correoReceptor = persona.getEmail();
 		String asunto = "Factura de alquiler de vehiculo - RappiCars";
 		
 		 try {
@@ -180,7 +181,7 @@ public class AlquilerLogic {
 		                "<th style=\"border-bottom: 1px solid #ddd; width: 150px;\">Importe ($)</th>"+
 		            "</tr>"+
 		            "<tr>"+
-		                "<td style=\"border-bottom: 1px solid #ddd;\">"+v.getDenominacion()+"</td>"+
+		                "<td style=\"border-bottom: 1px solid #ddd;\">"+v.getMarca().getDenominacion()+" "+v.getDenominacion()+"</td>"+
 		                "<td style=\"border-bottom: 1px solid #ddd;\">"+v.getPrecioDia()+"</td>"+
 		                "<td style=\"border-bottom: 1px solid #ddd;\">"+calcularImporte(v.getPrecioDia(), periodo)+"</td>"+
 		            "</tr>"+

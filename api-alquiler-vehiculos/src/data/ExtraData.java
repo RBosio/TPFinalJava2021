@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import entities.Alquiler;
 import entities.Extra;
-import entities.Rol;
 
 public class ExtraData {
 	

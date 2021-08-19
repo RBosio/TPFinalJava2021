@@ -63,4 +63,8 @@ public class VehiculoLogic {
 		
 		return vehiculo;
 	}
+	
+	public void insertImage(Vehiculo v) throws SQLException, IOException{
+		vd.insertImage(v);
+	}
 }

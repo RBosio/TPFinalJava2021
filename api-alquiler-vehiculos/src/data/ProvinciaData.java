@@ -113,9 +113,10 @@ public class ProvinciaData {
 		PreparedStatement stmt = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE provincia SET denominacion=? WHERE idProv=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE provincia SET denominacion=?, idPais=? WHERE idProv=?");
 			stmt.setString(1, actP.getDenominacion());
-			stmt.setInt(2, actP.getIdProvincia());
+			stmt.setInt(2, actP.getIdPais());
+			stmt.setInt(3, actP.getIdProvincia());
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {

@@ -159,14 +159,14 @@ public class VehiculoData {
 		ResultSet key = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO vehiculo(denominacion, imagen, cantPersonas, tipoCambio, aireAc, abs, precioDia, idMarca) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO vehiculo(denominacion, cantPersonas, tipoCambio, aireAc, abs, precioDia, cantidad, idMarca) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, nuevoV.getDenominacion());
-			stmt.setString(2, nuevoV.getImagen());
-			stmt.setInt(3, nuevoV.getCantPersonas());
-			stmt.setString(4, nuevoV.getTipoCambio());
-			stmt.setBoolean(5, nuevoV.getAireAc());
-			stmt.setBoolean(6, nuevoV.getAbs());
-			stmt.setDouble(7, nuevoV.getPrecioDia());
+			stmt.setInt(2, nuevoV.getCantPersonas());
+			stmt.setString(3, nuevoV.getTipoCambio());
+			stmt.setBoolean(4, nuevoV.getAireAc());
+			stmt.setBoolean(5, nuevoV.getAbs());
+			stmt.setDouble(6, nuevoV.getPrecioDia());
+			stmt.setInt(7, nuevoV.getCantidad());
 			stmt.setInt(8, nuevoV.getIdMarca());
 			stmt.executeUpdate();
 			key = stmt.getGeneratedKeys();
@@ -194,16 +194,15 @@ public class VehiculoData {
 		PreparedStatement stmt = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE vehiculo SET denominacion=?, imagen=?, cantPersonas=?, tipoCambio=?, aireAc=?, abs=?, precioDia=?, idMarca=? WHERE idVeh=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE vehiculo SET denominacion=?, cantPersonas=?, tipoCambio=?, aireAc=?, abs=?, precioDia=?, idMarca=? WHERE idVeh=?");
 			stmt.setString(1, actV.getDenominacion());
-			stmt.setString(2, actV.getImagen());
-			stmt.setInt(3, actV.getCantPersonas());
-			stmt.setString(4, actV.getTipoCambio());
-			stmt.setBoolean(5, actV.getAireAc());
-			stmt.setBoolean(6, actV.getAbs());
-			stmt.setDouble(7, actV.getPrecioDia());
-			stmt.setInt(8, actV.getIdMarca());
-			stmt.setInt(9, actV.getIdVeh());
+			stmt.setInt(2, actV.getCantPersonas());
+			stmt.setString(3, actV.getTipoCambio());
+			stmt.setBoolean(4, actV.getAireAc());
+			stmt.setBoolean(5, actV.getAbs());
+			stmt.setDouble(6, actV.getPrecioDia());
+			stmt.setInt(7, actV.getIdMarca());
+			stmt.setInt(8, actV.getIdVeh());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new SQLException();
@@ -281,6 +280,30 @@ public class VehiculoData {
 			throw new IOException();
 		} finally {
 			try {
+				if (stmt!= null) stmt.close();
+				DbConnector.getInstancia().releaseConn();
+			} catch (SQLException | IOException e) {
+				throw new SQLException();
+			}
+		}
+	}
+	
+	public void insertImage(Vehiculo veh) throws SQLException, IOException{
+		PreparedStatement stmt = null;
+		ResultSet key = null;
+
+		try {
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("UPDATE vehiculo SET imagen=? WHERE idVeh=?");
+			stmt.setString(1, veh.getImagen());
+			stmt.setInt(2, veh.getIdVeh());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLException();
+		} catch (IOException e) {
+			throw new IOException();
+		} finally {
+			try {
+				if (key != null) key.close();
 				if (stmt!= null) stmt.close();
 				DbConnector.getInstancia().releaseConn();
 			} catch (SQLException | IOException e) {
