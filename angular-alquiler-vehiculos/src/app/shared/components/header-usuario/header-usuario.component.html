@@ -1,0 +1,23 @@
+<header class="header">
+  <div class="group-title" routerLink="/">
+    <i class="fas fa-car icon-title"></i>
+    <h1 class="title">RappiCars</h1>
+  </div>
+  <div class="user" *ngIf="usuario">
+    <p class="name">{{usuario.nombre}} {{usuario.apellido}}</p>
+    <i class="fas fa-sign-out-alt icon"></i>
+  </div>
+</header>
+<div class="container-nav" *ngIf="usuario">
+  <nav class="nav">
+    <ul class="items">
+        <li routerLink="alquiler">Alquilar</li>
+        <li routerLink="vehiculos">Vehiculos</li>
+        <li routerLink="contacto">Contacto</li>
+    </ul>
+    <ul class="paneles">
+        <li *ngIf="vendedor()">Panel Vendedor</li>
+        <li *ngIf="administrador()">Panel Administrador</li>
+    </ul>
+  </nav>
+</div>

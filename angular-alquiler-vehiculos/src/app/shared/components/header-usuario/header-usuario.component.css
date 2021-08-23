@@ -1,0 +1,91 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #0E1F4D;
+    color: #fff;
+    user-select: none;
+}
+
+.container-nav{
+    width: 75%;
+    margin: auto;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.icon-title{
+    font-size: 32px;
+}
+
+.group-title{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin: 5px 30px;
+    padding: 5px 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.title{
+    margin-left: 10px;
+    font-weight: 500;
+    margin: auto 10px;
+}
+
+.user{
+    display: flex;
+    align-items: center;
+    margin: 5px 30px;
+}
+
+.name{
+    margin-right: 10px;
+    font-weight: 400;
+    margin: auto 0;
+    margin-right: 10px;
+}
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: #13307E;
+    color: #fff;
+    user-select: none;
+}
+
+.items{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.items li{
+    font-weight: 400;
+    padding: 10px;
+}
+
+.items li:hover{
+    background-color: #eee;
+    color: #13307E;
+    cursor: pointer;
+}
+
+.paneles{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.paneles li{
+    font-weight: 400;
+    padding: 10px;
+}
+
+.paneles li:hover{
+    background-color: #eee;
+    color: #1d4796;
+    cursor: pointer;
+}
