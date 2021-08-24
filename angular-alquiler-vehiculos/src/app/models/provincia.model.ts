@@ -5,3 +5,10 @@ export interface ProvinciaI{
     denominacion: string;
     pais: PaisI;
 }
+
+export interface ProvinciaIResponse{
+    idProvincia: number;
+    denominacion: string;
+    idPais: number;
+    estado: boolean;
+}

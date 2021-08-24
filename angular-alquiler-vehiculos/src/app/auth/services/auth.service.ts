@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { UserLoginI, UserLoginResponseI } from 'src/app/models/user.model';
+import { UserLoginI, UserLoginResponseI, UserSignupI } from 'src/app/models/user.model';
 import { environment } from "../../../environments/environment";
 
 import { catchError, map } from "rxjs/operators";
@@ -23,6 +23,18 @@ export class AuthService {
         this.localStorageService.setJsonValue('token', res.token);
         this.localStorageService.setJsonValue('user', res);
         this.userEvent.emit(res);
+        return res
+      }),
+      catchError(err => {
+        return throwError(err.error.message)
+      })
+    )
+  }
+  
+  signup(user: UserSignupI){
+    return this.http.post<UserLoginResponseI>(environment.BASE_URL+'/persona/signup', user)
+    .pipe(
+      map((res: UserLoginResponseI) => {
         return res
       }),
       catchError(err => {

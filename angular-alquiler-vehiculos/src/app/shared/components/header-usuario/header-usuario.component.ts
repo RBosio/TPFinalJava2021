@@ -15,6 +15,7 @@ export class HeaderUsuarioComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.usuario = this.localService.getJsonValue('user') || '';
     this.authService.userEvent.subscribe(resp => {
       this.usuario = resp;
     })

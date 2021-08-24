@@ -5,3 +5,10 @@ export interface LocalidadI{
     nombre: string;
     provincia: ProvinciaI;
 }
+
+export interface LocalidadIResponse{
+    codPostal: number;
+    nombre: string;
+    idProv: number;
+    estado: boolean;
+}

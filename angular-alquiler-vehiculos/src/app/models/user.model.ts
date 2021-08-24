@@ -19,7 +19,7 @@ export interface UserLoginResponseI{
     token: string;
 }
 
-export interface UserRegisterI{
+export interface UserSignupI{
     nombre: string;
     apellido: string;
     dni: string;
