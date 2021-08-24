@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUsuarioComponent } from './components/header-usuario/header-usuario.component';
+import { MaterialModule } from '../angular-material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,11 +12,17 @@ import { HeaderUsuarioComponent } from './components/header-usuario/header-usuar
     HeaderUsuarioComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule
   ],
+  providers: [],
   exports: [
+    CommonModule,
     FooterComponent,
-    HeaderUsuarioComponent
+    HeaderUsuarioComponent,
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { UserLoginI, UserLoginResponse } from 'src/app/models/user.model';
+import { UserLoginI, UserLoginResponseI } from 'src/app/models/user.model';
 import { environment } from "../../../environments/environment";
 
 import { catchError, map } from "rxjs/operators";
@@ -11,15 +11,15 @@ import { LocalService } from 'src/app/shared/services/local.service';
   providedIn: 'root'
 })
 export class AuthService {
-  user: UserLoginResponse
-  userEvent = new EventEmitter<UserLoginResponse>();
+  user: UserLoginResponseI
+  userEvent = new EventEmitter<UserLoginResponseI>();
 
   constructor(private http: HttpClient, private localStorageService: LocalService) { }
 
   login(user: UserLoginI){
-    return this.http.post<UserLoginResponse>(environment.BASE_URL+'/persona/login', user)
+    return this.http.post<UserLoginResponseI>(environment.BASE_URL+'/persona/login', user)
     .pipe(
-      map((res: UserLoginResponse) => {
+      map((res: UserLoginResponseI) => {
         this.localStorageService.setJsonValue('token', res.token);
         this.localStorageService.setJsonValue('user', res);
         this.userEvent.emit(res);

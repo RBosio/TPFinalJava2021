@@ -6,7 +6,7 @@ export interface UserLoginI{
     password: string;
 }
 
-export interface UserLoginResponse{
+export interface UserLoginResponseI{
     apellido: string;
     codPostal: string;
     dni: string;
@@ -17,4 +17,15 @@ export interface UserLoginResponse{
     roles: Rol[];
     telefono: string
     token: string;
+}
+
+export interface UserRegisterI{
+    nombre: string;
+    apellido: string;
+    dni: string;
+    email: string;
+    password: string;
+    telefono: string
+    codPostal: number;
+    roles: Rol[];
 }

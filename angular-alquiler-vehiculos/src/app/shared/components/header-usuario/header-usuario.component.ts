@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { UserLoginResponse } from 'src/app/models/user.model';
+import { UserLoginResponseI } from 'src/app/models/user.model';
 import { LocalService } from '../../services/local.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { LocalService } from '../../services/local.service';
   styleUrls: ['./header-usuario.component.css']
 })
 export class HeaderUsuarioComponent implements OnInit {
-  public usuario: UserLoginResponse;
+  public usuario: UserLoginResponseI;
 
   constructor(public authService: AuthService, private localService: LocalService) {
   }
