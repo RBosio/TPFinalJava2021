@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.Duration;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.LinkedList;
 import java.util.Properties;
 
@@ -85,13 +85,9 @@ public class AlquilerLogic {
 		persona.setDni(a.getDni());
 		id = ad.getIdFactura();
 		
-		
-		long periodo = Duration.between(a.getFechaHoraInicio(), a.getFechaHoraFin()).toDays();
-		
-		
+		long periodo = DAYS.between(a.getFechaHoraInicio().toLocalDate(), a.getFechaHoraFin().toLocalDate());
 		
 		envioEmail(persona, cobertura, a, id, periodo, vehiculo, extras);
-		
 		
 		return alquiler;
 	}
@@ -161,12 +157,12 @@ public class AlquilerLogic {
 		            "</tr>"+
 		            "<tr>"+
 		                "<td style=\"text-align: left;\">Argentina</td>"+
-		                "<td style=\"text-align: center; padding-top: 10px;\">Desde: "+a.getFechaHoraInicio()+"</td>"+
+		                "<td style=\"text-align: center; padding-top: 10px;\">Desde: "+a.getFechaHoraInicio().toLocalDate()+"</td>"+
 		                "<td style=\"text-align: right;\">DNI: "+persona.getDni()+"</td>"+
 		            "</tr>"+
 		            "<tr>"+
 		                "<td style=\"text-align: left;\">javaapp.alquiler01@gmail.com</td>"+
-		                "<td style=\"text-align: center;\" rowspan=\"2\">Hasta: "+a.getFechaHoraFin()+"</td>"+
+		                "<td style=\"text-align: center;\" rowspan=\"2\">Hasta: "+a.getFechaHoraFin().toLocalDate()+"</td>"+
 		                "<td style=\"text-align: right;\">"+persona.getEmail()+"</td>"+
 		            "</tr>"+
 		            "<tr>"+
