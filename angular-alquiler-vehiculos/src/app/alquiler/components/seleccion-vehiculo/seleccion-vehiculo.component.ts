@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { VehiculoI } from 'src/app/models/vehiculo.model';
+import { LocalService } from 'src/app/shared/services/local.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-seleccion-vehiculo',
@@ -6,10 +11,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./seleccion-vehiculo.component.css']
 })
 export class SeleccionVehiculoComponent implements OnInit {
-
-  constructor() { }
+  vehiculos : VehiculoI[];
+  page_size = 6;
+  page_number = 1;
+  pageSizeOptions = [5, 10, 20];
+  BASE_URL = environment.BASE_URL
+  constructor(
+    private localService: LocalService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.vehiculos = this.localService.getJsonValue('alquiler');
   }
 
+  handlePage(e: PageEvent){
+    this.page_size = e.pageSize;
+    this.page_number = e.pageIndex + 1;
+  }
+
+  seleccion(idVeh: number){
+    this.localService.setJsonValue('vehiculoSeleccionado', this.vehiculos.filter(v => v.idVeh == idVeh));
+    this.router.navigateByUrl('alquiler/seguros-extras');
+  }
 }

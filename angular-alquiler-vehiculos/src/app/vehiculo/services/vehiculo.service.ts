@@ -26,7 +26,9 @@ export class VehiculoService {
     return this.http.get(environment.BASE_URL+`/vehiculo/${fechaHoraInicio}/${fechaHoraFin}`)
     .pipe(
       map((resp: VehiculoI[]) => {
+        const fechas = {"fechaHoraInicio": fechaHoraInicio, "fechaHoraFin": fechaHoraFin};
         resp = resp.filter(v => v.estado && v.marca.denominacion == marca);
+        this.localService.setJsonValue('fechas', fechas);
         this.localService.setJsonValue('alquiler', resp);
         return resp;
         })

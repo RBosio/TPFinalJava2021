@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 import { MarcaService } from 'src/app/marca/services/marca.service';
 import { MarcaI } from 'src/app/models/marca.model';
-import { VehiculoI } from 'src/app/models/vehiculo.model';
 import { VehiculoService } from 'src/app/vehiculo/services/vehiculo.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { VehiculoService } from 'src/app/vehiculo/services/vehiculo.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   formulario: FormGroup;
   fechaActual: string;
   fechaRetiro: string;
@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
   fechaRDefinitiva: string;
   fechaDDefinitiva: string;
   marcas: MarcaI[];
-  vehiculos: VehiculoI[];
+  marcasSubscription: Subscription;
+  vehiculosSubscription: Subscription;
   constructor(
     private fb: FormBuilder,
     private marcaService: MarcaService,
@@ -34,14 +35,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.crearFormulario();
-    this.marcaService.getMarcas()
+    this.marcasSubscription = this.marcaService.getMarcas()
     .subscribe(resp => {
       this.marcas = resp;
     });
-    this.vehiculoService.getVehiculos()
-    .subscribe(resp => {
-      this.vehiculos = resp;
-    })
   }
 
   crearFormulario(){
@@ -65,9 +62,16 @@ export class HomeComponent implements OnInit {
   buscar(){
     this.fechaRDefinitiva = moment(this.formulario.value.fechaRetiro).format('YYYY-MM-DD')+'T'+this.formulario.value.horaRetiro+':00';
     this.fechaDDefinitiva = moment(this.formulario.value.fechaDevolucion).format('YYYY-MM-DD')+'T'+this.formulario.value.horaDevolucion+':00';
-    this.vehiculoService.getVehiculosDisponibles(this.fechaRDefinitiva, this.fechaDDefinitiva, this.formulario.value.marca)
+    this.vehiculosSubscription = this.vehiculoService.getVehiculosDisponibles(this.fechaRDefinitiva, this.fechaDDefinitiva, this.formulario.value.marca)
     .subscribe(resp => {
       this.router.navigateByUrl('alquiler/seleccion-vehiculo');
     })
+  }
+
+  ngOnDestroy(){
+    this.marcasSubscription.unsubscribe();
+    if(this.vehiculosSubscription){
+      this.vehiculosSubscription.unsubscribe();
+    }
   }
 }

@@ -1,1 +1,19 @@
-<p>seleccion-vehiculo works!</p>
+<div class="container">
+    <mat-paginator [length]="vehiculos.length"
+               [pageSize]="page_size"
+               (page)="handlePage($event)"
+               aria-label="Select page">
+    </mat-paginator>
+    <div class="cards">
+        <div class="card" *ngFor="let vehiculo of vehiculos | paginator:page_size:page_number">
+            <div class="card-header">
+                <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen">
+            </div>
+            <div class="card-body">
+                <h5 class="title">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h5>
+                <p class="precio">{{vehiculo.precioDia | currency}}</p>
+                <button class="boton" (click)="seleccion(vehiculo.idVeh)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

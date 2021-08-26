@@ -6,12 +6,16 @@ import { SharedModule } from '../shared/shared.module';
 
 import { HomeComponent } from './components/home/home.component';
 import { SeleccionVehiculoComponent } from './components/seleccion-vehiculo/seleccion-vehiculo.component';
+import { PaginatorPipe } from './pipes/paginator.pipe';
+import { SegurosExtrasComponent } from './components/seguros-extras/seguros-extras.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
-    SeleccionVehiculoComponent
+    SeleccionVehiculoComponent,
+    PaginatorPipe,
+    SegurosExtrasComponent
   ],
   imports: [
     CommonModule,
