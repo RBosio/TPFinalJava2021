@@ -1,9 +1,8 @@
-import { validateHorizontalPosition } from '@angular/cdk/overlay';
-import { error } from '@angular/compiler/src/util';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserLoginI } from 'src/app/models/user.model';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,10 +11,11 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   user: UserLoginI
   formularioLogin: FormGroup
   error: string
+  loginSubscription: Subscription
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       "email": this.formularioLogin.value.email,
       "password": this.formularioLogin.value.password
     }
-    this.authService.login(this.user)
+    this.loginSubscription = this.authService.login(this.user)
     .subscribe(res => {
       this.router.navigateByUrl('')
     },
@@ -56,5 +56,11 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     })
+  }
+
+  ngOnDestroy(){
+    if(this.loginSubscription){
+      this.loginSubscription.unsubscribe();
+    }
   }
 }

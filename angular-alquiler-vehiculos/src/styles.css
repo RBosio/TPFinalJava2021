@@ -18,6 +18,7 @@ body{
     width: 75%;
     margin: auto;
     height: 83vh;
+    overflow: hidden;
 }
 
 .b-hover:hover{

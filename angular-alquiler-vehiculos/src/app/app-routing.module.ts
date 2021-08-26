@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './alquiler/components/home/home.component';
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: '', redirectTo: 'alquiler', pathMatch: 'full',
+  },
+  {
+    path: 'alquiler',
+    loadChildren: () => import('./alquiler/alquiler.module').then(m => m.AlquilerModule)
   },
   {
     path: 'auth',
@@ -12,7 +16,6 @@ const routes: Routes = [
   },
   {
     path: '**',
-    pathMatch: 'full',
     redirectTo: ''
   },
 ];

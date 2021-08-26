@@ -1,0 +1,52 @@
+<div class="container">
+    <form [formGroup]="formulario">
+        <div class="form">
+            <div class="retiro">
+                <mat-form-field appearance="fill" class="input">
+                    <mat-label>Fecha Retiro *</mat-label>
+                    <input matInput [matDatepicker]="pickerRetiro" [min]="fechaActual" [max]="fechaDevolucion" formControlName="fechaRetiro" (dateChange)="setFechaRetiro()">
+                    <mat-datepicker-toggle matSuffix [for]="pickerRetiro"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerRetiro></mat-datepicker>
+                    <mat-error *ngIf="formulario.controls['fechaRetiro'].invalid">
+                        <span *ngIf="formulario.controls['fechaRetiro'].errors.required">Fecha retiro requerida</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Hora Retiro *</mat-label>
+                    <input type="time" matInput formControlName="horaRetiro">
+                    <mat-error *ngIf="formulario.controls['horaRetiro'].invalid">
+                      <span *ngIf="formulario.controls['horaRetiro'].errors.required">Hora retiro requerida</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="devolucion">
+                <mat-form-field appearance="fill" class="input">
+                    <mat-label>Fecha devolucion *</mat-label>
+                    <input matInput [matDatepicker]="pickerDevolucion" [min]="fechaRetiro" formControlName="fechaDevolucion" (dateChange)="setFechaDevolucion()">
+                    <mat-datepicker-toggle matSuffix [for]="pickerDevolucion"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDevolucion></mat-datepicker>
+                    <mat-error *ngIf="formulario.controls['fechaDevolucion'].invalid">
+                        <span *ngIf="formulario.controls['fechaDevolucion'].errors.required">Fecha devolucion requerida</span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Hora Devolucion *</mat-label>
+                    <input type="time" matInput formControlName="horaDevolucion">
+                    <mat-error *ngIf="formulario.controls['horaDevolucion'].invalid">
+                      <span *ngIf="formulario.controls['horaDevolucion'].errors.required">Hora devolucion requerida</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill" class="input">
+                <mat-label>Marca *</mat-label>
+                <mat-select formControlName="marca">
+                  <mat-option *ngFor="let marca of marcas" [value]="marca.denominacion">
+                    {{marca.denominacion}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario.controls['marca'].invalid"><span *ngIf="formulario.controls['marca'].errors.required">Marca requerida</span></mat-error>
+            </mat-form-field>
+            <button class="boton b-hover" [disabled]="!formulario.valid" (click)="buscar()">Buscar</button>
+        </div>
+    </form>
+</div>

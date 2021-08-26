@@ -1,0 +1,38 @@
+.container{
+    padding-top: 30px;
+    height: 100%;
+}
+
+.form{
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 30px;
+    margin: 0 auto;
+    width: 75%;
+}
+
+.retiro{
+    display: flex;
+    justify-content: space-between;
+}
+
+.devolucion{
+    display: flex;
+    justify-content: space-between;
+}
+
+.boton{
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #13307E;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.input{
+    width: 30%;
+}

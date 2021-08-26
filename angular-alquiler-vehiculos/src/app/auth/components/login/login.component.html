@@ -15,7 +15,7 @@
 
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Contraseña</mat-label>
-          <input type="password" matInput placeholder="password" formControlName="password">
+          <input type="password" matInput formControlName="password">
           <mat-error *ngIf="formularioLogin.controls['password'].invalid && formularioLogin.controls['password'].dirty">
             <span *ngIf="formularioLogin.controls['password'].errors.minlength">Contraseña de minimo 6 caracteres</span>
           </mat-error>
@@ -24,7 +24,7 @@
           </mat-error>
         </mat-form-field>
         
-        <p>¿No tienes una cuenta? <a routerLink="../register">Registrate</a></p>
+        <p>¿No tienes una cuenta? <a routerLink="../signup">Registrate</a></p>
         <button class="boton b-hover" (click)="login($event)" [disabled]="!formularioLogin.valid">Ingresar</button>
     </form>
 </div>

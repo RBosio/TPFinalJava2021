@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LocalidadService } from 'src/app/localidad/services/localidad.service';
 import { LocalidadIResponse } from 'src/app/models/localidad.model';
 import { PaisI } from 'src/app/models/pais.model';
@@ -16,10 +17,14 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
-export class RegistroComponent implements OnInit {
+export class RegistroComponent implements OnInit, OnDestroy {
   user: UserSignupI;
   formularioLogin: FormGroup;
   error: string;
+  signupSubscription: Subscription;
+  paisSubscription: Subscription;
+  provinciaSubscription: Subscription;
+  localidadSubscription: Subscription;
 
   paises: PaisI[];
   provincias: ProvinciaIResponse[];
@@ -36,7 +41,7 @@ export class RegistroComponent implements OnInit {
 
   ngOnInit(): void {
     this.crearFormulario();
-    this.paisService.getPaises()
+    this.paisSubscription = this.paisService.getPaises()
     .subscribe(resp => {
       this.paises = resp;
     })
@@ -70,7 +75,7 @@ export class RegistroComponent implements OnInit {
       "codPostal": this.formularioLogin.value.localidad,
       "roles": []
     }
-    this.authService.signup(this.user)
+    this.signupSubscription = this.authService.signup(this.user)
       .subscribe(res => {
         this.router.navigateByUrl('auth/login')
       },
@@ -89,7 +94,7 @@ export class RegistroComponent implements OnInit {
   }
   
   getProvinciasxPais(opcion: number){
-    this.provinciaService.getProvinciasxPais(opcion)
+    this.provinciaSubscription = this.provinciaService.getProvinciasxPais(opcion)
     .subscribe(resp => {
       this.provincias = resp;
       this.formularioLogin.get('provincia').enable();
@@ -97,10 +102,19 @@ export class RegistroComponent implements OnInit {
   }
   
   getLocalidadesxProvincia(opcion: number){
-    this.localidadService.getLocalidadesxProvincia(opcion)
+    this.localidadSubscription = this.localidadService.getLocalidadesxProvincia(opcion)
     .subscribe(resp => {
       this.localidades = resp;
       this.formularioLogin.get('localidad').enable();
     })
+  }
+
+  ngOnDestroy(){
+    this.paisSubscription.unsubscribe();
+    if(this.signupSubscription){
+      this.provinciaSubscription.unsubscribe();
+      this.localidadSubscription.unsubscribe();
+      this.signupSubscription.unsubscribe();
+    }
   }
 }
