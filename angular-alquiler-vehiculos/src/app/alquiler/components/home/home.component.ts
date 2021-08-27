@@ -60,9 +60,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   buscar(){
+    const momentRetiro = moment(this.formulario.value.fechaRetiro);
+    const momentDevolucion = moment(this.formulario.value.fechaDevolucion);
+    const diff = momentDevolucion.diff(momentRetiro, 'days');
     this.fechaRDefinitiva = moment(this.formulario.value.fechaRetiro).format('YYYY-MM-DD')+'T'+this.formulario.value.horaRetiro+':00';
     this.fechaDDefinitiva = moment(this.formulario.value.fechaDevolucion).format('YYYY-MM-DD')+'T'+this.formulario.value.horaDevolucion+':00';
-    this.vehiculosSubscription = this.vehiculoService.getVehiculosDisponibles(this.fechaRDefinitiva, this.fechaDDefinitiva, this.formulario.value.marca)
+    this.vehiculosSubscription = this.vehiculoService.getVehiculosDisponibles(this.fechaRDefinitiva, this.fechaDDefinitiva, this.formulario.value.marca, diff)
     .subscribe(resp => {
       this.router.navigateByUrl('alquiler/seleccion-vehiculo');
     })

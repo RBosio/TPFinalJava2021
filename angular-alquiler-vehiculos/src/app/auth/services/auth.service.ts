@@ -14,7 +14,10 @@ export class AuthService {
   user: UserLoginResponseI
   userEvent = new EventEmitter<UserLoginResponseI>();
 
-  constructor(private http: HttpClient, private localStorageService: LocalService) { }
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalService
+    ) { }
 
   login(user: UserLoginI){
     return this.http.post<UserLoginResponseI>(environment.BASE_URL+'/persona/login', user)

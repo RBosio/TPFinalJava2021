@@ -9,7 +9,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatCardModule } from '@angular/material/card';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 const myComponents = [
   MatSnackBarModule,
   MatButtonModule,
@@ -21,7 +22,8 @@ const myComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatPaginatorModule,
-  MatCardModule
+  MatRadioModule,
+  MatCheckboxModule
 ]
 
 @NgModule({

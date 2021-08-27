@@ -1,1 +1,34 @@
-<p>seguros-extras works!</p>
+<div class="container">
+    <div class="header">
+        <div class="volver b-hover" routerLink="../seleccion-vehiculo">
+            <i class="fas fa-long-arrow-alt-left"></i>
+            <p>Volver</p>  
+        </div>
+        <p class="dias">Alquiler por {{diferencia}} dias</p>
+    </div>
+    <div class="contenedor">
+        <h3 class="title">Seguros</h3>
+        <div class="seguros">
+            <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group radio">
+                <div class="seguro" *ngFor="let seguro of seguros">
+                    <mat-radio-button [value]="seguro" (click)="option(seguro)">
+                        {{seguro.descripcion}}
+                    </mat-radio-button>
+                    <div class="precio">{{seguro.precioDia | currency}}</div>
+                </div>
+            </mat-radio-group>
+            <hr>
+        <h3 class="title">Extras</h3>
+        <div class="extras">
+            <ul>
+                <li class="extra" *ngFor="let extra of extras">
+                    <mat-checkbox (change)="check(extra)">
+                        {{extra.descripcion}}
+                    </mat-checkbox>
+                    <p>{{extra.precioDia | currency}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<button class="boton b-hover" (click)="seleccionar()">Seleccionar</button>

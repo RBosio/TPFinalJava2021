@@ -15,13 +15,15 @@ export class SeleccionVehiculoComponent implements OnInit {
   page_size = 6;
   page_number = 1;
   pageSizeOptions = [5, 10, 20];
-  BASE_URL = environment.BASE_URL
+  BASE_URL = environment.BASE_URL;
+  diferencia: number;
   constructor(
     private localService: LocalService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.diferencia = this.localService.getJsonValue('fechas').diferencia;
     this.vehiculos = this.localService.getJsonValue('alquiler');
   }
 

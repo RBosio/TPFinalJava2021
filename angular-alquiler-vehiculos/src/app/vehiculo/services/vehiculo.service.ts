@@ -22,12 +22,12 @@ export class VehiculoService {
     )
   }
 
-  getVehiculosDisponibles(fechaHoraInicio: string, fechaHoraFin: string, marca: string){
+  getVehiculosDisponibles(fechaHoraInicio: string, fechaHoraFin: string, marca: string, diferencia: number){
     return this.http.get(environment.BASE_URL+`/vehiculo/${fechaHoraInicio}/${fechaHoraFin}`)
     .pipe(
       map((resp: VehiculoI[]) => {
-        const fechas = {"fechaHoraInicio": fechaHoraInicio, "fechaHoraFin": fechaHoraFin};
-        resp = resp.filter(v => v.estado && v.marca.denominacion == marca);
+        const fechas = {"fechaHoraInicio": fechaHoraInicio, "fechaHoraFin": fechaHoraFin, diferencia};
+        resp = resp.filter(v => v.estado && v.marca.denominacion == marca && (v.precioDia *= diferencia));
         this.localService.setJsonValue('fechas', fechas);
         this.localService.setJsonValue('alquiler', resp);
         return resp;

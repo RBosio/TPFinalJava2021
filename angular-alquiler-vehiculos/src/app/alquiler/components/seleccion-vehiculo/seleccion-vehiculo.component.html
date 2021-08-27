@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="header">
+        <div class="volver b-hover" routerLink="../">
+            <i class="fas fa-long-arrow-alt-left"></i>
+            <p>Volver</p>  
+        </div>
+        <p class="dias">Alquiler por {{diferencia}} dias</p>
+    </div>
     <mat-paginator [length]="vehiculos.length"
                [pageSize]="page_size"
                (page)="handlePage($event)"
@@ -12,7 +19,7 @@
             <div class="card-body">
                 <h5 class="title">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h5>
                 <p class="precio">{{vehiculo.precioDia | currency}}</p>
-                <button class="boton" (click)="seleccion(vehiculo.idVeh)">Seleccionar</button>
+                <button class="boton b-hover" (click)="seleccion(vehiculo.idVeh)">Seleccionar</button>
             </div>
         </div>
     </div>
