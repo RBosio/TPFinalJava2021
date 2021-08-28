@@ -7,16 +7,20 @@ import { MaterialModule } from '../angular-material/material.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUsuarioComponent } from './components/header-usuario/header-usuario.component';
 import { DialogoConfirmacionComponent } from './components/dialogo-confirmacion/dialogo-confirmacion.component';
+import { SharedRoutingModule } from './shared-routing.module';
+import { PaginatorPipe } from './pipes/paginator.pipe';
 
 
 @NgModule({
   declarations: [
     FooterComponent,
     HeaderUsuarioComponent,
-    DialogoConfirmacionComponent
+    DialogoConfirmacionComponent,
+    PaginatorPipe
   ],
   imports: [
     CommonModule,
+    SharedRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule
@@ -29,7 +33,8 @@ import { DialogoConfirmacionComponent } from './components/dialogo-confirmacion/
     DialogoConfirmacionComponent,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    PaginatorPipe
   ]
 })
 export class SharedModule { }

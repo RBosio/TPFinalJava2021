@@ -22,6 +22,13 @@ export class VehiculoService {
     )
   }
 
+  getAll(){
+    return this.http.get(environment.BASE_URL+'/vehiculo')
+    .pipe(
+      map((resp: VehiculoI[]) => resp.filter(v => v.estado))
+    )
+  }
+
   getVehiculosDisponibles(fechaHoraInicio: string, fechaHoraFin: string, marca: string, diferencia: number){
     return this.http.get(environment.BASE_URL+`/vehiculo/${fechaHoraInicio}/${fechaHoraFin}`)
     .pipe(

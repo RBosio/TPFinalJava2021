@@ -8,7 +8,7 @@ import { LocalidadIResponse } from 'src/app/models/localidad.model';
 import { PaisI } from 'src/app/models/pais.model';
 import { ProvinciaIResponse } from 'src/app/models/provincia.model';
 import { UserSignupI } from 'src/app/models/user.model';
-import { PaisService } from 'src/app/paises/services/pais.service';
+import { PaisService } from 'src/app/pais/services/pais.service';
 import { ProvinciaService } from 'src/app/provincia/services/provincia.service';
 import { AuthService } from '../../services/auth.service';
 

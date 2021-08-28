@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 
 import { FacturaComponent } from './components/factura/factura.component';
 import { HomeComponent } from './components/home/home.component';
-import { PaginatorPipe } from './pipes/paginator.pipe';
 import { SegurosExtrasComponent } from './components/seguros-extras/seguros-extras.component';
 import { SeleccionVehiculoComponent } from './components/seleccion-vehiculo/seleccion-vehiculo.component';
 
@@ -15,7 +14,6 @@ import { SeleccionVehiculoComponent } from './components/seleccion-vehiculo/sele
   declarations: [
     HomeComponent,
     SeleccionVehiculoComponent,
-    PaginatorPipe,
     SegurosExtrasComponent,
     FacturaComponent
   ],

@@ -39,6 +39,12 @@ p{
     text-decoration: underline;
 }
 
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
 .card{
     display: flex;
     flex-direction: column;
@@ -94,12 +100,12 @@ hr{
 .boton{
     width: 30%;
     padding: 5px;
+    margin: 10px auto;
     cursor: pointer;
     background-color: #13307E;
     border: none;
     border-radius: 10px;
     color: #fff;
-    margin: auto;
     margin-bottom: 15px;
     font-size: 14px;
 }

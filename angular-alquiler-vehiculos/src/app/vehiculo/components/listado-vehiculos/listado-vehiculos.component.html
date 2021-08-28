@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="paginacion">
+        <mat-paginator [length]="vehiculos.length"
+                   [pageSize]="page_size"
+                   (page)="handlePage($event)"
+                   aria-label="Select page">
+        </mat-paginator>
+        <div class="cards">
+            <div class="card" *ngFor="let vehiculo of vehiculos | paginator:page_size:page_number">
+                <div class="card-header">
+                    <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen">
+                </div>
+                <div class="card-body">
+                    <h5 class="title">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h5>
+                    <hr>
+                    <div class="icons">
+                        <div class="cantidadPersonas flex">
+                            <i class="fas fa-male icon"></i>
+                            <p class="texto">{{vehiculo.cantPersonas}}</p>
+                        </div>
+                        <div class="abs flex">
+                            <img class="img-abs" src="../../../../assets/abs.svg" alt="abs">
+                            <p class="texto" *ngIf="vehiculo.abs">Si</p>
+                            <p class="texto" *ngIf="!vehiculo.abs">No</p>
+                        </div>
+                        <div class="cambio flex">
+                            <img class="img-cambio" src="../../../../assets/cambio.svg" alt="cambio">
+                            <p class="texto">{{vehiculo.tipoCambio}}</p>
+                        </div>
+                        <div class="ac flex">
+                            <i class="far fa-snowflake icon"></i>
+                            <p class="texto" *ngIf="vehiculo.aireAc">Si</p>
+                            <p class="texto" *ngIf="!vehiculo.aireAc">No</p>
+                        </div>
+                    </div>
+                    <p class="precio">{{vehiculo.precioDia | currency}}</p>
+                </div>
+            </div>
+        </div>
+</div>
