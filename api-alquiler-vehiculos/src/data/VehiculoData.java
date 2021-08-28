@@ -61,13 +61,16 @@ public class VehiculoData {
 		LinkedList<Vehiculo> vehiculos = new LinkedList<Vehiculo>();
 
 		try {
-			String query = "SELECT DISTINCT v.idVeh, v.denominacion, v.precioDia, v.imagen, v.cantidad, v.estado, v.idMarca, m.denominacion " +
-						   "FROM vehiculo v " +
-						   "INNER JOIN marca m " +
-						   "ON v.idMarca = m.idMarca " +
-						   "LEFT JOIN alquiler a " +
-						   "ON v.idVeh = a.idVeh " +
-						   "WHERE (a.fechaHoraInicio > ? OR a.fechaHoraFin < ?) OR v.cantidad > 0";
+			String query = 	"SELECT idVeh, v.denominacion, v.precioDia, v.imagen, v.cantidad, v.estado, v.idMarca, m.denominacion "+
+							"FROM vehiculo v "+
+							"INNER JOIN marca m "+
+							"ON v.idMarca = m.idMarca "+
+							"WHERE idVeh NOT IN ( "+
+							"SELECT DISTINCT v.idVeh "+
+							"FROM vehiculo v "+
+							"LEFT JOIN alquiler a "+
+							"ON v.idVeh = a.idVeh "+
+							"WHERE NOT(a.fechaHoraInicio > ? OR a.fechaHoraFin < ?)) OR v.cantidad > 0";
 			stmt = DbConnector.getInstancia().getConn().prepareStatement(query);
 			stmt.setTimestamp(1, Timestamp.valueOf(a.getFechaHoraFin()));
 			stmt.setTimestamp(2, Timestamp.valueOf(a.getFechaHoraInicio()));
@@ -92,7 +95,6 @@ public class VehiculoData {
 				vehiculos.add(veh);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new SQLException();
 		} catch (IOException e) {
 			throw new IOException();
