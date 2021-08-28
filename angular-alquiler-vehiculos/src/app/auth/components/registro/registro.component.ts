@@ -77,7 +77,8 @@ export class RegistroComponent implements OnInit, OnDestroy {
     }
     this.signupSubscription = this.authService.signup(this.user)
       .subscribe(res => {
-        this.router.navigateByUrl('auth/login')
+        this.openSnackBar('Usuario registrado correctamente', 'Cerrar');
+        this.router.navigateByUrl('auth/login');
       },
       err => {
         this.openSnackBar('DNI o email existente', 'Cerrar');

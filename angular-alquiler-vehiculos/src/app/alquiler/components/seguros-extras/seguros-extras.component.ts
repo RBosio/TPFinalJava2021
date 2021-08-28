@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ExtraService } from 'src/app/extra/services/extra.service';
 import { CoberturaI } from 'src/app/models/cobertura.model';
 import { ExtraI } from 'src/app/models/extra.model';
@@ -12,12 +13,14 @@ import { LocalService } from 'src/app/shared/services/local.service';
   templateUrl: './seguros-extras.component.html',
   styleUrls: ['./seguros-extras.component.css']
 })
-export class SegurosExtrasComponent implements OnInit {
+export class SegurosExtrasComponent implements OnInit, OnDestroy {
   seguros: CoberturaI[];
   extras: ExtraI[];
   extrasElegidos: ExtraI[];
   diferencia: number;
   seguro: CoberturaI;
+  seguroSubscription: Subscription;
+  extrasSubscription: Subscription;
   constructor(
     private seguroService: SeguroService,
     private localService: LocalService,
@@ -28,11 +31,11 @@ export class SegurosExtrasComponent implements OnInit {
 
   ngOnInit(): void {
     this.diferencia = this.localService.getJsonValue('fechas').diferencia;
-    this.seguroService.getSeguros()
+    this.seguroSubscription = this.seguroService.getSeguros()
     .subscribe(resp => {
       this.seguros = resp;
     })
-    this.extraService.getExtras()
+    this.extrasSubscription = this.extraService.getExtras()
     .subscribe(resp => {
       this.extras = resp;
     })
@@ -51,7 +54,7 @@ export class SegurosExtrasComponent implements OnInit {
 
   seleccionar(){
     if(this.seguro){
-      const seguro_extras = {seguro: this.seguro, extras: this.extras};
+      const seguro_extras = {seguro: this.seguro, extras: this.extrasElegidos};
       this.localService.setJsonValue('seguro-extras', seguro_extras);
       this.router.navigateByUrl('alquiler/factura');
     }else{
@@ -65,5 +68,10 @@ export class SegurosExtrasComponent implements OnInit {
       horizontalPosition: 'center',
       verticalPosition: 'bottom'
     });
+  }
+
+  ngOnDestroy(){
+    this.seguroSubscription.unsubscribe();
+    this.extrasSubscription.unsubscribe();
   }
 }

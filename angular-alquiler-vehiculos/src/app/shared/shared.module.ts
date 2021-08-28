@@ -6,12 +6,14 @@ import { MaterialModule } from '../angular-material/material.module';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderUsuarioComponent } from './components/header-usuario/header-usuario.component';
+import { DialogoConfirmacionComponent } from './components/dialogo-confirmacion/dialogo-confirmacion.component';
 
 
 @NgModule({
   declarations: [
     FooterComponent,
-    HeaderUsuarioComponent
+    HeaderUsuarioComponent,
+    DialogoConfirmacionComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +26,7 @@ import { HeaderUsuarioComponent } from './components/header-usuario/header-usuar
     CommonModule,
     FooterComponent,
     HeaderUsuarioComponent,
+    DialogoConfirmacionComponent,
     MaterialModule,
     ReactiveFormsModule,
     FormsModule

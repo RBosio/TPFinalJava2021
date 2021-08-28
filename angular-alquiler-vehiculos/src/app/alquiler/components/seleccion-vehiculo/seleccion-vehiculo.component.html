@@ -6,21 +6,26 @@
         </div>
         <p class="dias">Alquiler por {{diferencia}} dias</p>
     </div>
-    <mat-paginator [length]="vehiculos.length"
-               [pageSize]="page_size"
-               (page)="handlePage($event)"
-               aria-label="Select page">
-    </mat-paginator>
-    <div class="cards">
-        <div class="card" *ngFor="let vehiculo of vehiculos | paginator:page_size:page_number">
-            <div class="card-header">
-                <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen">
-            </div>
-            <div class="card-body">
-                <h5 class="title">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h5>
-                <p class="precio">{{vehiculo.precioDia | currency}}</p>
-                <button class="boton b-hover" (click)="seleccion(vehiculo.idVeh)">Seleccionar</button>
+    <div class="paginacion" *ngIf="vehiculos.length > 0; else sinVehiculos">
+        <mat-paginator [length]="vehiculos.length"
+                   [pageSize]="page_size"
+                   (page)="handlePage($event)"
+                   aria-label="Select page">
+        </mat-paginator>
+        <div class="cards">
+            <div class="card" *ngFor="let vehiculo of vehiculos | paginator:page_size:page_number">
+                <div class="card-header">
+                    <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen">
+                </div>
+                <div class="card-body">
+                    <h5 class="title">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h5>
+                    <p class="precio">{{vehiculo.precioDia | currency}}</p>
+                    <button class="boton b-hover" (click)="seleccion(vehiculo.idVeh)">Seleccionar</button>
+                </div>
             </div>
         </div>
     </div>
+    <ng-template #sinVehiculos>
+        <p class="sinVehiculos">Sin vehiculos disponibles para las fechas establecidas</p>
+    </ng-template>
 </div>

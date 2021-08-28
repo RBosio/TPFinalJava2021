@@ -1,1 +1,40 @@
-<p>factura works!</p>
+
+<div class="container">
+
+    <div class="header">
+        <div class="volver b-hover" routerLink="../seguros-extras">
+            <i class="fas fa-long-arrow-alt-left"></i>
+            <p>Volver</p>  
+        </div>
+        <p class="dias">Alquiler por {{diferencia}} dias</p>
+    </div>
+    <div class="card">
+        <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen" alt="">
+        <h3 class="title vehiculo">{{vehiculo.marca.denominacion}} {{vehiculo.denominacion}}</h3>
+        <p class="precioVehiculo">{{vehiculo.precioDia | currency}}</p>
+        <h4 class="title">Seguro</h4>
+        <div class="seguro">
+            <p>{{seguro.descripcion}}</p>
+            <p>{{seguro.precioDia | currency}}</p>
+        </div>
+        <h4 class="title">Extras</h4>
+        <div class="extra" *ngFor="let extra of extras">
+            <p>{{extra.descripcion}}</p>
+            <p>{{extra.precioDia | currency}}</p>
+        </div>
+        <hr>
+        <div class="subtotal">
+            <p>Subtotal</p>
+            <p>{{subtotal | currency}}</p>
+        </div>
+        <div class="iva">
+            <p>IVA (21%)</p>
+            <p>{{iva | currency}}</p>
+        </div>
+        <div class="total">
+            <p>TOTAL</p>
+            <p>{{total | currency}}</p>
+        </div>
+    </div>
+    <button class="boton b-hover" (click)="confirmar()">Confirmar</button>
+</div>
