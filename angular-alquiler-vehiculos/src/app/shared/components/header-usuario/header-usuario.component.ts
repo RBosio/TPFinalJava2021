@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserLoginResponseI } from 'src/app/models/user.model';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { LocalService } from '../../services/local.service';
 
 @Component({
@@ -9,9 +10,12 @@ import { LocalService } from '../../services/local.service';
   styleUrls: ['./header-usuario.component.css']
 })
 export class HeaderUsuarioComponent implements OnInit {
-  public usuario: UserLoginResponseI;
-
-  constructor(public authService: AuthService, private localService: LocalService) {
+  usuario: UserLoginResponseI;
+  opened: boolean = false;
+  constructor(
+    public authService: AuthService,
+    private localService: LocalService,
+    private sidenavService: SidenavService) {
   }
   
   ngOnInit(): void {
@@ -29,5 +33,13 @@ export class HeaderUsuarioComponent implements OnInit {
   administrador(){
     if(this.usuario.roles.filter(valor => valor.nombre == 'Administrador').length > 0) return true;
     return false;
+  }
+
+  toggleSidenavVendedor(){
+    this.sidenavService.toggleSidenav('vendedor');
+  }
+  
+  toggleSidenavAdministrador(){
+    this.sidenavService.toggleSidenav('administrador');
   }
 }

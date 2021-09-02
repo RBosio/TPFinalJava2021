@@ -11,13 +11,13 @@
 <div class="container-nav" *ngIf="usuario">
   <nav class="nav">
     <ul class="items">
-        <li routerLink="alquiler">Alquilar</li>
-        <li routerLink="vehiculo">Vehiculos</li>
-        <li routerLink="contacto">Contacto</li>
+        <li routerLink="alquiler" routerLinkActive="active">Alquilar</li>
+        <li routerLink="vehiculo" routerLinkActive="active">Vehiculos</li>
+        <li routerLink="contacto" routerLinkActive="active">Contacto</li>
     </ul>
     <ul class="paneles">
-        <li *ngIf="vendedor()">Panel Vendedor</li>
-        <li *ngIf="administrador()">Panel Administrador</li>
+        <li *ngIf="vendedor()" (click)="toggleSidenavVendedor()">Panel Vendedor</li>
+        <li *ngIf="administrador()" (click)="toggleSidenavAdministrador()">Panel Administrador</li>
     </ul>
   </nav>
 </div>

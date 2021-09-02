@@ -1,5 +1,41 @@
 <app-header-usuario></app-header-usuario>
 <div class="container-base">
-    <router-outlet></router-outlet>
+    <mat-sidenav-container>
+        <mat-sidenav [(opened)]="toggle">
+            <div class="panel-vendedor" *ngIf="mode == 'vendedor'">
+                <ul>
+                    <li *ngFor="let d of dataVendedor; let index = index">
+                        <div class="title">
+                            {{d.item}}
+                            <i class="fas fa-chevron-right" [ngClass]="{'rotate': dataToggleVendedor[index]}" (click)="toggleVendedor(index)"></i>
+                        </div>
+                        <ul class="sub-menu" [ngClass]="{'block': dataToggleVendedor[index]}">
+                            <li *ngFor="let options of d.options">
+                                {{options}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-administrador" *ngIf="mode == 'administrador'">
+                <ul>
+                    <li *ngFor="let d of dataAdministrador; let index = index">
+                        <div class="title">
+                            {{d.item}}
+                            <i class="fas fa-chevron-right" [ngClass]="{'rotate': dataToggleAdministrador[index]}" (click)="toggleAdministrador(index)"></i>
+                        </div>
+                        <ul class="sub-menu" [ngClass]="{'block': dataToggleAdministrador[index]}">
+                            <li *ngFor="let options of d.options" [routerLink]="d.item.toLowerCase()+'/'+opciones(options)">
+                                {{options}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>
 <app-footer></app-footer>

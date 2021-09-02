@@ -12,6 +12,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 const myComponents = [
   MatSnackBarModule,
   MatButtonModule,
@@ -25,7 +27,9 @@ const myComponents = [
   MatPaginatorModule,
   MatRadioModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatSidenavModule
 ]
 
 @NgModule({
