@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 
+import entities.Pais;
 import entities.Provincia;
 
 
@@ -16,14 +17,18 @@ public class ProvinciaData {
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("SELECT * FROM provincia");
+			rs = stmt.executeQuery("SELECT * FROM provincia pro INNER JOIN pais p ON pro.idPais = p.idPais WHERE p.estado = 1");
 			
 				while(rs.next()){
 					Provincia p = new Provincia();
-					p.setIdProvincia(rs.getInt("idProv"));
-					p.setDenominacion(rs.getString("denominacion"));
-					p.setEstado(rs.getBoolean("estado"));
-					p.setIdPais(rs.getInt("idPais"));
+					p.setIdProvincia(rs.getInt("pro.idProv"));
+					p.setDenominacion(rs.getString("pro.denominacion"));
+					p.setEstado(rs.getBoolean("pro.estado"));
+					p.setIdPais(rs.getInt("pro.idPais"));
+					
+					Pais pais = new Pais();
+					pais.setDenominacion(rs.getString("p.denominacion"));
+					p.setPais(pais);
 					provincias.add(p);
 				}				
 		} catch (SQLException e) {
@@ -48,7 +53,7 @@ public class ProvinciaData {
 		ResultSet rs = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM provincia WHERE idProv=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM provincia pro INNER JOIN pais p ON pro.idPais = p.idPais WHERE idProv=? AND p.estado = 1");
 			stmt.setInt(1, p.getIdProvincia());
 			rs = stmt.executeQuery();
 			
@@ -58,6 +63,10 @@ public class ProvinciaData {
 				p.setDenominacion(rs.getString("denominacion"));
 				p.setEstado(rs.getBoolean("estado"));
 				p.setIdPais(rs.getInt("idPais"));
+				
+				Pais pais = new Pais();
+				pais.setDenominacion(rs.getString("p.denominacion"));
+				p.setPais(pais);
 			} else {
 				throw new NullPointerException();
 			}
