@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { LocalidadService } from 'src/app/localidad/services/localidad.service';
 import { LocalidadIResponse } from 'src/app/models/localidad.model';
 import { PaisI } from 'src/app/models/pais.model';
-import { ProvinciaIResponse } from 'src/app/models/provincia.model';
+import { ProvinciaI } from 'src/app/models/provincia.model';
 import { UserSignupI } from 'src/app/models/user.model';
 import { PaisService } from 'src/app/pais/services/pais.service';
 import { ProvinciaService } from 'src/app/provincia/services/provincia.service';
@@ -19,7 +19,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegistroComponent implements OnInit, OnDestroy {
   user: UserSignupI;
-  formularioLogin: FormGroup;
+  formularioRegistro: FormGroup;
   error: string;
   signupSubscription: Subscription;
   paisSubscription: Subscription;
@@ -27,7 +27,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   localidadSubscription: Subscription;
 
   paises: PaisI[];
-  provincias: ProvinciaIResponse[];
+  provincias: ProvinciaI[];
   localidades: LocalidadIResponse[];
   constructor(
     private authService: AuthService,
@@ -45,12 +45,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
     .subscribe(resp => {
       this.paises = resp;
     })
-    this.formularioLogin.get('provincia').disable();
-    this.formularioLogin.get('localidad').disable();
+    this.formularioRegistro.get('provincia').disable();
+    this.formularioRegistro.get('localidad').disable();
   }
 
   crearFormulario(){
-    this.formularioLogin = this.fb.group({
+    this.formularioRegistro = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       dni: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10), Validators.pattern('[0-9]*')])],
@@ -66,19 +66,19 @@ export class RegistroComponent implements OnInit, OnDestroy {
   signup(e: Event){
     e.preventDefault();
     this.user = {
-      "nombre": this.formularioLogin.value.nombre,
-      "apellido": this.formularioLogin.value.apellido,
-      "dni": this.formularioLogin.value.dni,
-      "email": this.formularioLogin.value.email,
-      "password": this.formularioLogin.value.password,
-      "telefono": this.formularioLogin.value.telefono,
-      "codPostal": this.formularioLogin.value.localidad,
+      "nombre": this.formularioRegistro.value.nombre,
+      "apellido": this.formularioRegistro.value.apellido,
+      "dni": this.formularioRegistro.value.dni,
+      "email": this.formularioRegistro.value.email,
+      "password": this.formularioRegistro.value.password,
+      "telefono": this.formularioRegistro.value.telefono,
+      "codPostal": this.formularioRegistro.value.localidad,
       "roles": []
     }
     this.signupSubscription = this.authService.signup(this.user)
       .subscribe(res => {
         this.openSnackBar('Usuario registrado correctamente', 'Cerrar');
-        this.router.navigateByUrl('auth/login');
+        this.router.navigateByUrl('auth/Registro');
       },
       err => {
         this.openSnackBar('DNI o email existente', 'Cerrar');
@@ -98,7 +98,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.provinciaSubscription = this.provinciaService.getProvinciasxPais(opcion)
     .subscribe(resp => {
       this.provincias = resp;
-      this.formularioLogin.get('provincia').enable();
+      this.formularioRegistro.get('provincia').enable();
     })
   }
   
@@ -106,7 +106,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.localidadSubscription = this.localidadService.getLocalidadesxProvincia(opcion)
     .subscribe(resp => {
       this.localidades = resp;
-      this.formularioLogin.get('localidad').enable();
+      this.formularioRegistro.get('localidad').enable();
     })
   }
 

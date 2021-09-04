@@ -14,14 +14,14 @@ export class AppComponent implements OnInit {
     {"item": "Alquileres", "options": ["Listado", "Confirmar alquiler", "Confirmar devolucion", "Cancelar alquiler"]}
   ];
   dataAdministrador = [
-    {"item": "Paises", "options": ["Listado", "Crear pais", "Actualizar pais", "Eliminar pais"]},
-    {"item": "Provincias", "options": ["Listado", "Crear provincia", "Actualizar provincia", "Eliminar provincia"]},
-    {"item": "Localidades", "options": ["Listado", "Crear localidad", "Actualizar localidad", "Eliminar localidad"]},
-    {"item": "Usuarios", "options": ["Listado", "Crear usuario", "Actualizar usuario", "Eliminar usuario"]},
-    {"item": "Vehiculos", "options": ["Listado", "Crear vehiculo", "Actualizar vehiculo", "Eliminar vehiculo"]},
-    {"item": "Marcas", "options": ["Listado", "Crear marca", "Actualizar marca", "Eliminar marca"]},
-    {"item": "Seguros", "options": ["Listado", "Crear seguro", "Actualizar seguro", "Eliminar seguro"]},
-    {"item": "Extras", "options": ["Listado", "Crear extra", "Actualizar extra", "Eliminar extra"]}
+    {"item": "Paises", "options": ["Listado", "Agregar nuevo pais"]},
+    {"item": "Provincias", "options": ["Listado", "Agregar nueva provincia"]},
+    {"item": "Localidades", "options": ["Listado", "Agregar nueva localidad"]},
+    {"item": "Usuarios", "options": ["Listado", "Agregar nuevo usuario"]},
+    {"item": "Vehiculos", "options": ["Listado", "Agregar nuevo vehiculo"]},
+    {"item": "Marcas", "options": ["Listado", "Agregar nueva marca"]},
+    {"item": "Seguros", "options": ["Listado", "Agregar nuevo seguro"]},
+    {"item": "Extras", "options": ["Listado", "Agregar nuevo extra"]}
   ];
   dataToggleVendedor: boolean[];
   dataToggleAdministrador: boolean[];

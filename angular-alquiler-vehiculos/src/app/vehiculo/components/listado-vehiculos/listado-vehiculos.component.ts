@@ -28,7 +28,6 @@ export class ListadoVehiculosComponent implements OnInit {
     this.vehiculoService.getAll()
     .subscribe(resp => {
       this.vehiculos = resp;
-      console.log(this.vehiculos);
     })
   }
 

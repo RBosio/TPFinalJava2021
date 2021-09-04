@@ -4,64 +4,64 @@
     <p>Volver</p>  
   </div>
   <i class="far fa-user-circle user"></i>
-  <form class="example-form form" [formGroup]="formularioLogin">
+  <form class="example-form form" [formGroup]="formularioRegistro">
       <mat-form-field class="example-full-width nombre" appearance="fill">
         <mat-label>Nombre *</mat-label>
         <input type="text" matInput formControlName="nombre" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['nombre'].invalid && formularioLogin.controls['nombre'].dirty">
-          <span *ngIf="formularioLogin.controls['nombre'].errors.required">Nombre requerido</span>
+        <mat-error *ngIf="formularioRegistro.controls['nombre'].invalid && formularioRegistro.controls['nombre'].dirty">
+          <span *ngIf="formularioRegistro.controls['nombre'].errors.required">Nombre requerido</span>
         </mat-error>
       </mat-form-field>
       
       <mat-form-field class="example-full-width apellido" appearance="fill">
         <mat-label>Apellido *</mat-label>
         <input type="text" matInput formControlName="apellido" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['apellido'].invalid && formularioLogin.controls['apellido'].dirty">
-          <span *ngIf="formularioLogin.controls['apellido'].errors.required">Apellido requerido</span>
+        <mat-error *ngIf="formularioRegistro.controls['apellido'].invalid && formularioRegistro.controls['apellido'].dirty">
+          <span *ngIf="formularioRegistro.controls['apellido'].errors.required">Apellido requerido</span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="example-full-width dni" appearance="fill">
         <mat-label>DNI *</mat-label>
         <input type="text" matInput formControlName="dni" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['dni'].invalid && formularioLogin.controls['dni'].dirty">
-          <span *ngIf="formularioLogin.controls['dni'].errors.required">DNI requerido</span>
+        <mat-error *ngIf="formularioRegistro.controls['dni'].invalid && formularioRegistro.controls['dni'].dirty">
+          <span *ngIf="formularioRegistro.controls['dni'].errors.required">DNI requerido</span>
         </mat-error>
-        <mat-error *ngIf="formularioLogin.controls['dni'].invalid && formularioLogin.controls['dni'].dirty">
-          <span *ngIf="formularioLogin.controls['dni'].errors.minlength || formularioLogin.controls['dni'].errors.maxlength || formularioLogin.controls['dni'].errors.pattern">DNI invalido</span>
+        <mat-error *ngIf="formularioRegistro.controls['dni'].invalid && formularioRegistro.controls['dni'].dirty">
+          <span *ngIf="formularioRegistro.controls['dni'].errors.minlength || formularioRegistro.controls['dni'].errors.maxlength || formularioRegistro.controls['dni'].errors.pattern">DNI invalido</span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="example-full-width email" appearance="fill">
         <mat-label>Email *</mat-label>
         <input type="email" matInput placeholder="email@example.com" formControlName="email" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['email'].invalid && formularioLogin.controls['email'].dirty">
-          <span *ngIf="formularioLogin.controls['email'].errors.email">Email invalido</span>
+        <mat-error *ngIf="formularioRegistro.controls['email'].invalid && formularioRegistro.controls['email'].dirty">
+          <span *ngIf="formularioRegistro.controls['email'].errors.email">Email invalido</span>
         </mat-error>
-        <mat-error *ngIf="formularioLogin.controls['email'].invalid && formularioLogin.controls['email'].dirty">
-          <span *ngIf="formularioLogin.controls['email'].errors.required">Email requerido</span>
+        <mat-error *ngIf="formularioRegistro.controls['email'].invalid && formularioRegistro.controls['email'].dirty">
+          <span *ngIf="formularioRegistro.controls['email'].errors.required">Email requerido</span>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="example-full-width password" appearance="fill">
         <mat-label>Contraseña *</mat-label>
         <input type="password" matInput formControlName="password" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['password'].invalid && formularioLogin.controls['password'].dirty">
-          <span *ngIf="formularioLogin.controls['password'].errors.minlength">Longitud minima de 6 caracteres</span>
+        <mat-error *ngIf="formularioRegistro.controls['password'].invalid && formularioRegistro.controls['password'].dirty">
+          <span *ngIf="formularioRegistro.controls['password'].errors.minlength">Longitud minima de 6 caracteres</span>
         </mat-error>
-        <mat-error *ngIf="formularioLogin.controls['password'].invalid && formularioLogin.controls['password'].dirty">
-          <span *ngIf="formularioLogin.controls['password'].errors.required">Contraseña requerida</span>
+        <mat-error *ngIf="formularioRegistro.controls['password'].invalid && formularioRegistro.controls['password'].dirty">
+          <span *ngIf="formularioRegistro.controls['password'].errors.required">Contraseña requerida</span>
         </mat-error>
       </mat-form-field>
       
       <mat-form-field class="example-full-width telefono" appearance="fill">
         <mat-label>Telefono *</mat-label>
         <input type="text" matInput formControlName="telefono" autocomplete="off">
-        <mat-error *ngIf="formularioLogin.controls['telefono'].invalid && formularioLogin.controls['telefono'].dirty">
-          <span *ngIf="formularioLogin.controls['telefono'].errors.required">Telefono requerido</span>
+        <mat-error *ngIf="formularioRegistro.controls['telefono'].invalid && formularioRegistro.controls['telefono'].dirty">
+          <span *ngIf="formularioRegistro.controls['telefono'].errors.required">Telefono requerido</span>
         </mat-error>
-        <mat-error *ngIf="formularioLogin.controls['telefono'].invalid && formularioLogin.controls['telefono'].dirty">
-          <span *ngIf="formularioLogin.controls['telefono'].errors.pattern">Telefono invalido</span>
+        <mat-error *ngIf="formularioRegistro.controls['telefono'].invalid && formularioRegistro.controls['telefono'].dirty">
+          <span *ngIf="formularioRegistro.controls['telefono'].errors.pattern">Telefono invalido</span>
         </mat-error>
       </mat-form-field>
 
@@ -72,7 +72,7 @@
             {{pais.denominacion}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="formularioLogin.controls['pais'].invalid && formularioLogin.controls['pais'].dirty"><span *ngIf="formularioLogin.controls['pais'].errors.required">Seleccione un pais</span></mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['pais'].invalid && formularioRegistro.controls['pais'].dirty"><span *ngIf="formularioRegistro.controls['pais'].errors.required">Seleccione un pais</span></mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="provincia">
@@ -82,7 +82,7 @@
             {{provincia.denominacion}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="formularioLogin.controls['provincia'].invalid && formularioLogin.controls['provincia'].dirty"><span *ngIf="formularioLogin.controls['provincia'].errors.required">Seleccione una provincia</span></mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['provincia'].invalid && formularioRegistro.controls['provincia'].dirty"><span *ngIf="formularioRegistro.controls['provincia'].errors.required">Seleccione una provincia</span></mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="localidad">
@@ -92,9 +92,9 @@
             {{localidad.nombre}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="formularioLogin.controls['localidad'].invalid && formularioLogin.controls['localidad'].dirty"><span *ngIf="formularioLogin.controls['localidad'].errors.required">Seleccione una localidad</span></mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['localidad'].invalid && formularioRegistro.controls['localidad'].dirty"><span *ngIf="formularioRegistro.controls['localidad'].errors.required">Seleccione una localidad</span></mat-error>
       </mat-form-field>
       
-      <button class="boton b-hover" [disabled]="!formularioLogin.valid" (click)="signup($event)">Registrar</button>
+      <button class="boton b-hover" [disabled]="!formularioRegistro.valid" (click)="signup($event)">Registrar</button>
   </form>
 </div>

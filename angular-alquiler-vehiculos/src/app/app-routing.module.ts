@@ -18,6 +18,14 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'paises',
+    loadChildren: () => import('./pais/pais.module').then(m => m.PaisModule)
+  },
+  {
+    path: 'provincias',
+    loadChildren: () => import('./provincia/provincia.module').then(m => m.ProvinciaModule)
+  },
+  {
     path: '**',
     redirectTo: 'alquiler'
   },

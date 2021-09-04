@@ -14,7 +14,6 @@ export class SeleccionVehiculoComponent implements OnInit {
   vehiculos : VehiculoI[];
   page_size = 6;
   page_number = 1;
-  pageSizeOptions = [5, 10, 20];
   BASE_URL = environment.BASE_URL;
   diferencia: number;
   constructor(

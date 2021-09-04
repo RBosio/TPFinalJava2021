@@ -1,0 +1,20 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Eliminar pais</p>
+</div>
+<form class="example-form form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Id Pais</mat-label>
+    <input matInput [value]="pais.idPais" disabled="true">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Denominacion</mat-label>
+    <input matInput [value]="pais.denominacion" disabled="true">
+  </mat-form-field>
+
+  <button class="boton b-hover" (click)="eliminarPais()">Eliminar</button>
+</form>
