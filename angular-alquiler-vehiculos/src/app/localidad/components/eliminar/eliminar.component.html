@@ -1,0 +1,30 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../l7istado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Eliminar localidad</p>
+</div>
+<form class="example-form form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Cod. Postal</mat-label>
+      <input matInput [value]="localidad.codPostal" disabled="true">
+    </mat-form-field>
+  
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Denominacion</mat-label>
+      <input matInput [value]="localidad.nombre" disabled="true" #denominacion>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Provincia</mat-label>
+      <input matInput [value]="provincia" disabled="true">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Pais</mat-label>
+      <input matInput [value]="pais" disabled="true">
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="eliminarLocalidad()">Eliminar</button>
+  </form>

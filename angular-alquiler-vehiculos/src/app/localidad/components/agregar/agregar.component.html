@@ -1,0 +1,49 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Nueva localidad</p>
+</div>
+<form class="example-form form" [formGroup]="formulario">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Cod. Postal *</mat-label>
+      <input type="text" matInput formControlName="codPostal" autocomplete="off">
+      <mat-error *ngIf="formulario.controls['codPostal'].invalid && formulario.controls['codPostal'].dirty">
+        <span *ngIf="formulario.controls['codPostal'].errors.required">Cod. Postal requerido</span>
+      </mat-error>
+      <mat-error *ngIf="formulario.controls['codPostal'].invalid && formulario.controls['codPostal'].dirty">
+        <span *ngIf="formulario.controls['codPostal'].errors.pattern">Cod. Postal invalido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Nombre *</mat-label>
+      <input type="text" matInput formControlName="nombre" autocomplete="off">
+      <mat-error *ngIf="formulario.controls['nombre'].invalid && formulario.controls['nombre'].dirty">
+        <span *ngIf="formulario.controls['nombre'].errors.required">Nombre requerido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="pais">
+      <mat-label>Pais *</mat-label>
+      <mat-select formControlName="pais" (selectionChange)="getProvinciasxPais(opcionPais.value)" #opcionPais>
+        <mat-option *ngFor="let pais of paises" [value]="pais.idPais">
+          {{pais.denominacion}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formulario.controls['pais'].invalid && formulario.controls['pais'].dirty"><span *ngIf="formulario.controls['pais'].errors.required">Seleccione un pais</span></mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="pais">
+      <mat-label>Provincia *</mat-label>
+      <mat-select formControlName="provincia">
+        <mat-option *ngFor="let provincia of provincias" [value]="provincia.idProvincia">
+          {{provincia.denominacion}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formulario.controls['provincia'].invalid && formulario.controls['provincia'].dirty"><span *ngIf="formulario.controls['pais'].errors.required">Seleccione un pais</span></mat-error>
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="nuevaLocalidad()" [disabled]="!formulario.valid">Agregar</button>
+  </form>

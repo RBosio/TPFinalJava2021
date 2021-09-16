@@ -34,7 +34,7 @@ export class PaisService {
     return this.http.put<PaisI>(environment.BASE_URL+`/pais/${pais.idPais}`, pais)
   }
   
-  eliminarPais(pais: PaisI): Observable<PaisI>{
-    return this.http.delete<PaisI>(environment.BASE_URL+`/pais/${pais.idPais}`)
+  eliminarPais(idPais: number): Observable<PaisI>{
+    return this.http.delete<PaisI>(environment.BASE_URL+`/pais/${idPais}`)
   }
 }

@@ -48,10 +48,7 @@ export class EliminarComponent implements OnInit, OnDestroy {
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
           const idProvincia = this.provincia.idProvincia;
-          const denominacion = this.provincia.denominacion;
-          const idPais = this.provincia.idPais;
-          this.provincia = {idProvincia, denominacion, idPais};
-          this.eliminarSubscription = this.provinciaService.eliminarProvincia(this.provincia)
+          this.eliminarSubscription = this.provinciaService.eliminarProvincia(idProvincia)
           .subscribe(resp => {
             this.openSnackBar('Provincia eliminada con exito', 'Cerrar');
             this.router.navigateByUrl('provincias');

@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PaisI } from 'src/app/models/pais.model';
+import { LocalidadI } from 'src/app/models/localidad.model';
 import { DialogoConfirmacionComponent } from 'src/app/shared/components/dialogo-confirmacion/dialogo-confirmacion.component';
-import { PaisService } from '../../services/pais.service';
+import { LocalidadService } from '../../services/localidad.service';
 
 @Component({
   selector: 'app-eliminar',
@@ -13,43 +13,47 @@ import { PaisService } from '../../services/pais.service';
   styleUrls: ['./eliminar.component.css']
 })
 export class EliminarComponent implements OnInit, OnDestroy {
-  pais: PaisI;
+  localidad: LocalidadI;
+  provincia: string;
+  pais: string;
   routeSubscription: Subscription;
-  paisSubscription: Subscription;
+  localidadSubscription: Subscription;
   eliminarSubscription: Subscription;
   confirmacionSubscription: Subscription;
   constructor(
     private confirmacion: MatDialog,
     private route: ActivatedRoute,
-    private paisService: PaisService,
+    private localidadService: LocalidadService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {
-    this.pais = {"idPais": 0, "denominacion": ''};
+    this.localidad = {"codPostal": '', "nombre": '', "idProv": 0};
   }
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
-      this.paisSubscription = this.paisService.getPais(params.id)
+      this.localidadSubscription = this.localidadService.getLocalidad(params.codPostal)
       .subscribe(resp => {
-        this.pais = resp;
+        this.localidad = resp;
+        this.provincia = resp.provincia.denominacion;
+        this.pais = resp.provincia.pais.denominacion;
       })
     })
   }
 
-  eliminarPais(){
+  eliminarLocalidad(){
     this.confirmacionSubscription = this.confirmacion
       .open(DialogoConfirmacionComponent, {
-        data: `¿Desea eliminar el pais?`
+        data: `¿Desea eliminar la localidad?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          const idPais = this.pais.idPais;
-          this.eliminarSubscription = this.paisService.eliminarPais(idPais)
+          const codPostal = this.localidad.codPostal;
+          this.eliminarSubscription = this.localidadService.eliminarLocalidad(codPostal)
           .subscribe(resp => {
-            this.openSnackBar('Pais eliminado con exito', 'Cerrar');
-            this.router.navigateByUrl('paises');
+            this.openSnackBar('Localidad eliminada con exito', 'Cerrar');
+            this.router.navigateByUrl('localidades');
           });
         }
       });
@@ -65,7 +69,7 @@ export class EliminarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.routeSubscription.unsubscribe();
-    this.paisSubscription.unsubscribe();
+    this.localidadSubscription.unsubscribe();
     if(this.confirmacionSubscription){
       this.eliminarSubscription.unsubscribe();
       this.confirmacionSubscription.unsubscribe();

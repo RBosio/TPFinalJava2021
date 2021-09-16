@@ -26,6 +26,10 @@ const routes: Routes = [
     loadChildren: () => import('./provincia/provincia.module').then(m => m.ProvinciaModule)
   },
   {
+    path: 'localidades',
+    loadChildren: () => import('./localidad/localidad.module').then(m => m.LocalidadModule)
+  },
+  {
     path: '**',
     redirectTo: 'alquiler'
   },

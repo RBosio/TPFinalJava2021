@@ -37,14 +37,14 @@ export class ProvinciaService {
   }
 
   nuevaProvincia(provincia: ProvinciaIPost): Observable<ProvinciaI>{
-    return this.http.post<ProvinciaI>(environment.BASE_URL+`/provincia`, provincia);
+    return this.http.post<ProvinciaI>(environment.BASE_URL+'/provincia', provincia);
   }
 
   editarProvincia(provincia: ProvinciaI): Observable<ProvinciaI>{
     return this.http.put<ProvinciaI>(environment.BASE_URL+`/provincia/${provincia.idProvincia}`, provincia)
   }
 
-  eliminarProvincia(provincia: ProvinciaI): Observable<ProvinciaI>{
-    return this.http.delete<ProvinciaI>(environment.BASE_URL+`/provincia/${provincia.idProvincia}`)
+  eliminarProvincia(idProv: number): Observable<ProvinciaI>{
+    return this.http.delete<ProvinciaI>(environment.BASE_URL+`/provincia/${idProv}`)
   }
 }

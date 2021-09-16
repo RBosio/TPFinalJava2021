@@ -1,7 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { AgregarComponent } from './components/agregar/agregar.component';
+import { EditarComponent } from './components/editar/editar.component';
+import { EliminarComponent } from './components/eliminar/eliminar.component';
+import { ListadoComponent } from './components/listado/listado.component';
+
+const routes: Routes = [
+  {path: 'listado', component: ListadoComponent},
+  {path: 'agregar', component: AgregarComponent},
+  {path: 'editar/:codPostal', component: EditarComponent},
+  {path: 'eliminar/:codPostal', component: EliminarComponent},
+  {path: '**', redirectTo: 'listado'}
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

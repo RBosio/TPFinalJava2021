@@ -1,0 +1,31 @@
+.contenedor{
+    width: 50%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+.operaciones{
+    width: 20%;
+}
+
+.edit, .trash{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.edit:hover, .trash:hover{
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.edit{
+    color: #003cff;
+}
+
+.trash{
+    color: #e00000;
+}
