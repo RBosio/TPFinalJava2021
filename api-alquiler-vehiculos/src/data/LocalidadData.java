@@ -5,6 +5,8 @@ import java.sql.*;
 import java.util.LinkedList;
 
 import entities.Localidad;
+import entities.Pais;
+import entities.Provincia;
 
 
 public class LocalidadData {
@@ -16,14 +18,22 @@ public class LocalidadData {
 
 		try {
 			stmt = DbConnector.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("SELECT * FROM localidad");
+			rs = stmt.executeQuery("SELECT * FROM localidad l INNER JOIN provincia p ON l.idProv = p.idProv INNER JOIN pais ON p.idPais = pais.idPais");
 			
 				while(rs.next()){
 					Localidad l = new Localidad();
+					Provincia pro = new Provincia();
+					Pais pais = new Pais();
 					l.setCodPostal(rs.getString("codPostal"));
 					l.setNombre(rs.getString("nombre"));
-					l.setEstado(rs.getBoolean("estado"));
-					l.setIdProv(rs.getInt("idProv"));
+					l.setEstado(rs.getBoolean("l.estado"));
+					l.setIdProv(rs.getInt("l.idProv"));
+					
+					pro.setDenominacion(rs.getString("p.denominacion"));
+					l.setProvincia(pro);
+					
+					pais.setDenominacion(rs.getString("pais.denominacion"));
+					pro.setPais(pais);
 					localidades.add(l);
 				}				
 		} catch (SQLException e) {
@@ -43,21 +53,29 @@ public class LocalidadData {
 		return localidades;
 	}
 	
-	public Localidad findById(Localidad l) throws SQLException, IOException{
+	public Localidad findByCodPostal(Localidad l) throws SQLException, IOException{
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM localidad WHERE codPostal=?");
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("SELECT * FROM localidad l INNER JOIN provincia p ON l.idProv = p.idProv INNER JOIN pais ON p.idPais = pais.idPais WHERE codPostal=?");
 			stmt.setString(1, l.getCodPostal());
 			rs = stmt.executeQuery();
 			
 			if(rs.next()){
 				l = new Localidad();
+				Provincia pro = new Provincia();
+				Pais pais = new Pais();
 				l.setCodPostal(rs.getString("codPostal"));
 				l.setNombre(rs.getString("nombre"));
-				l.setEstado(rs.getBoolean("estado"));
-				l.setIdProv(rs.getInt("idProv"));
+				l.setEstado(rs.getBoolean("l.estado"));
+				l.setIdProv(rs.getInt("l.idProv"));
+				
+				pro.setDenominacion(rs.getString("p.denominacion"));
+				l.setProvincia(pro);
+				
+				pais.setDenominacion(rs.getString("pais.denominacion"));
+				pro.setPais(pais);
 			} else {
 				throw new NullPointerException();
 			}

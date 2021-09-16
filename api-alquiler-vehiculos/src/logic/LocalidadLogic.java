@@ -21,7 +21,7 @@ public class LocalidadLogic {
 	}
 	
 	public Localidad getOne(Localidad l) throws SQLException, IOException{
-		Localidad localidad = ld.findById(l);
+		Localidad localidad = ld.findByCodPostal(l);
 		
 		return localidad;
 	}
