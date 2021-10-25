@@ -1,0 +1,22 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Eliminar vehiculo</p>
+</div>
+<form class="example-form form">
+    <img [src]="BASE_URL+'/vehiculo/images/'+vehiculo.imagen" class="imagen">
+    
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Id</mat-label>
+      <input matInput [value]="vehiculo.idVeh" disabled="true" #id>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Denominacion</mat-label>
+      <input matInput [value]="vehiculo.marca.denominacion+' '+vehiculo.denominacion" disabled="true">
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="eliminarVehiculo()">Eliminar</button>
+</form>

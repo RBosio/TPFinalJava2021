@@ -1,0 +1,23 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Editar marca</p>
+</div>
+<form class="example-form form" [formGroup]="formulario">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Id Marca</mat-label>
+      <input matInput [value]="marca.idMarca" disabled="true">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Denominacion *</mat-label>
+      <input type="text" matInput formControlName="denominacion" autocomplete="off" [value]="marca.denominacion">
+      <mat-error *ngIf="formulario.controls['denominacion'].invalid && formulario.controls['denominacion'].dirty">
+        <span *ngIf="formulario.controls['denominacion'].errors.required">Denominacion requerida</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="editarMarca()" [disabled]="!formulario.valid">Editar</button>
+  </form>

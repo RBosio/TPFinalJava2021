@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PaisI } from 'src/app/models/pais.model';
+import { VehiculoI } from 'src/app/models/vehiculo.model';
 import { DialogoConfirmacionComponent } from 'src/app/shared/components/dialogo-confirmacion/dialogo-confirmacion.component';
-import { PaisService } from '../../services/pais.service';
+import { environment } from 'src/environments/environment';
+import { VehiculoService } from '../../services/vehiculo.service';
 
 @Component({
   selector: 'app-eliminar',
@@ -13,43 +14,46 @@ import { PaisService } from '../../services/pais.service';
   styleUrls: ['./eliminar.component.css']
 })
 export class EliminarComponent implements OnInit, OnDestroy {
-  pais: PaisI;
+  vehiculo: VehiculoI;
+  pais: string;
+  BASE_URL = environment.BASE_URL;
+
   routeSubscription: Subscription;
-  paisSubscription: Subscription;
+  vehiculoSubscription: Subscription;
   eliminarSubscription: Subscription;
   confirmacionSubscription: Subscription;
   constructor(
     private confirmacion: MatDialog,
     private route: ActivatedRoute,
-    private paisService: PaisService,
+    private vehiculoService: VehiculoService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {
-    this.pais = {"idPais": 0, "denominacion": ''};
+    this.vehiculo = {"idVeh": 0, "denominacion": '', "imagen": 'predeterminada.png', "cantPersonas": 0, "tipoCambio": "", "aireAc": false, "abs": false, "precioDia": 0, "estado": true, "marca": {"idMarca": 0, "denominacion": "", "estado": true}};
   }
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
-      this.paisSubscription = this.paisService.getPais(params.id)
+      this.vehiculoSubscription = this.vehiculoService.getVehiculo(params.idVeh)
       .subscribe(resp => {
-        this.pais = resp;
+        this.vehiculo = resp;
       })
     })
   }
 
-  eliminarPais(){
+  eliminarVehiculo(){
     this.confirmacionSubscription = this.confirmacion
       .open(DialogoConfirmacionComponent, {
-        data: `¿Desea eliminar el pais?`
+        data: `¿Desea eliminar el vehiculo?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          const idPais = this.pais.idPais;
-          this.eliminarSubscription = this.paisService.eliminarPais(idPais)
+          const id = this.vehiculo.idVeh;
+          this.eliminarSubscription = this.vehiculoService.eliminarVehiculo(id)
           .subscribe(resp => {
-            this.openSnackBar('Pais eliminado con exito', 'Cerrar');
-            this.router.navigateByUrl('paises');
+            this.openSnackBar('Vehiculo eliminado con exito', 'Cerrar');
+            this.router.navigateByUrl('vehiculos/listado');
           });
         }
       });
@@ -65,7 +69,7 @@ export class EliminarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.routeSubscription.unsubscribe();
-    this.paisSubscription.unsubscribe();
+    this.vehiculoSubscription.unsubscribe();
     if(this.eliminarSubscription){
       this.eliminarSubscription.unsubscribe();
       this.confirmacionSubscription.unsubscribe();

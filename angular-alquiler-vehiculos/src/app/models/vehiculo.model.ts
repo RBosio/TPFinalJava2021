@@ -1,14 +1,15 @@
 import { MarcaI } from "./marca.model";
 
 export interface VehiculoI{
-    idVeh: number;
+    idVeh?: number;
     denominacion: string;
-    imagen: string;
+    imagen?: string;
     cantPersonas: number;
-    tipoCambio: boolean;
+    tipoCambio: string;
     aireAc: boolean;
     abs: boolean;
     precioDia: number;
-    estado: boolean;
-    marca: MarcaI;
+    idMarca?: number;
+    estado?: boolean;
+    marca?: MarcaI;
 }

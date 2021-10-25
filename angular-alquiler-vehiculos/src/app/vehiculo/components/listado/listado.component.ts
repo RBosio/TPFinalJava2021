@@ -5,11 +5,11 @@ import { environment } from 'src/environments/environment';
 import { VehiculoService } from '../../services/vehiculo.service';
 
 @Component({
-  selector: 'app-listado-vehiculos',
-  templateUrl: './listado-vehiculos.component.html',
-  styleUrls: ['./listado-vehiculos.component.css']
+  selector: 'app-listado',
+  templateUrl: './listado.component.html',
+  styleUrls: ['./listado.component.css']
 })
-export class ListadoVehiculosComponent implements OnInit {
+export class ListadoComponent implements OnInit {
   vehiculos : VehiculoI[];
   page_size = 3;
   page_number = 1;

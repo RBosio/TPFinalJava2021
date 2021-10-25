@@ -70,7 +70,7 @@ export class EliminarComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.routeSubscription.unsubscribe();
     this.localidadSubscription.unsubscribe();
-    if(this.confirmacionSubscription){
+    if(this.eliminarSubscription){
       this.eliminarSubscription.unsubscribe();
       this.confirmacionSubscription.unsubscribe();
     }

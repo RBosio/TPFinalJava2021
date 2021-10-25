@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="header">
+      <div class="volver b-hover" routerLink="../listado">
+          <i class="fas fa-long-arrow-alt-left"></i>
+          <p>Volver</p>  
+      </div>
+      <p class="text">Nuevo vehiculo</p>
+    </div>
+    <form class="example-form form" [formGroup]="formularioVehiculo">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <input type="file" name="imagen" id="imagen" style="display: none;" (change)="fotoSeleccionada($event)" #photoInput>
+            <img [src]="photoSelected || 'assets/default.png'" alt="no-image" (click)="photoInput.click()" class="imagen">
+            
+            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                <mat-form-field class="example-full-width denominacion" appearance="fill">
+                  <mat-label>Denominacion *</mat-label>
+                  <input type="text" matInput formControlName="denominacion" autocomplete="off">
+                  <mat-error *ngIf="formularioVehiculo.controls['denominacion'].invalid && formularioVehiculo.controls['denominacion'].dirty">
+                      <span *ngIf="formularioVehiculo.controls['denominacion'].errors.required">Denominacion requerida</span>
+                    </mat-error>
+                </mat-form-field>
+                
+                <mat-form-field appearance="fill" class="marca">
+                  <mat-label>Marca *</mat-label>
+                  <mat-select formControlName="marca">
+                    <mat-option *ngFor="let marca of marcas" [value]="marca.idMarca">
+                      {{marca.denominacion}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formularioVehiculo.controls['marca'].invalid && formularioVehiculo.controls['marca'].dirty"><span *ngIf="formularioVehiculo.controls['marca'].errors.required">Seleccione un marca</span></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 15px;">
+            <mat-form-field class="example-full-width cantPersonas" appearance="fill">
+              <mat-label>Cant. Personas *</mat-label>
+              <input type="number" matInput formControlName="cantPersonas" autocomplete="off" min="1">
+              <mat-error *ngIf="formularioVehiculo.controls['cantPersonas'].invalid && formularioVehiculo.controls['cantPersonas'].dirty">
+                <span *ngIf="formularioVehiculo.controls['cantPersonas'].errors.required">Cantidad de personas requerido</span>
+              </mat-error>
+              <mat-error *ngIf="formularioVehiculo.controls['cantPersonas'].invalid && formularioVehiculo.controls['cantPersonas'].dirty">
+                <span *ngIf="formularioVehiculo.controls['cantPersonas'].errors.pattern">Numero invalido</span>
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field class="example-full-width precioDia" appearance="fill">
+              <mat-label>Precio x Dia *</mat-label>
+              <input type="text" matInput formControlName="precioDia" autocomplete="off" min="0">
+              <mat-error *ngIf="formularioVehiculo.controls['precioDia'].invalid && formularioVehiculo.controls['precioDia'].dirty">
+                <span *ngIf="formularioVehiculo.controls['precioDia'].errors.required">Precio requerido</span>
+              </mat-error>
+              <mat-error *ngIf="formularioVehiculo.controls['precioDia'].invalid && formularioVehiculo.controls['precioDia'].dirty">
+                <span *ngIf="formularioVehiculo.controls['precioDia'].errors.pattern">Numero invalido</span>
+              </mat-error>
+            </mat-form-field>
+        </div>
+  
+        <mat-form-field appearance="fill" class="tipoCambio">
+          <mat-label>tipoCambio *</mat-label>
+          <mat-select formControlName="tipoCambio">
+            <mat-option *ngFor="let tipoCambio of tiposCambio" [value]="tipoCambio.sigla">
+              {{tipoCambio.denominacion}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formularioVehiculo.controls['tipoCambio'].invalid && formularioVehiculo.controls['tipoCambio'].dirty"><span *ngIf="formularioVehiculo.controls['tipoCambio'].errors.required">Seleccione un tipo de cambio</span></mat-error>
+        </mat-form-field>
+  
+        <mat-checkbox class="check" formControlName="abs">
+          ABS
+        </mat-checkbox>
+        
+        <mat-checkbox class="check" formControlName="aireAc">
+          Aire AC
+        </mat-checkbox>
+        
+        <button class="boton b-hover" (click)="nuevoVehiculo($event)">Registrar</button>
+    </form>
+  </div>

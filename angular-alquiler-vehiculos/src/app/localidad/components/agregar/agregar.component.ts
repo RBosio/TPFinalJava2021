@@ -70,6 +70,9 @@ export class AgregarComponent implements OnInit {
     .subscribe(resp => {
       this.openSnackBar('Localidad insertada con exito', 'Cerrar');
       this.router.navigateByUrl('localidades');
+    },
+    err => {
+      this.openSnackBar('Localidad existente', 'Cerrar');
     });
   }
 

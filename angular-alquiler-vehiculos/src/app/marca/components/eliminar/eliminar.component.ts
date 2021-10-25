@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PaisI } from 'src/app/models/pais.model';
+import { MarcaI } from 'src/app/models/marca.model';
 import { DialogoConfirmacionComponent } from 'src/app/shared/components/dialogo-confirmacion/dialogo-confirmacion.component';
-import { PaisService } from '../../services/pais.service';
+import { MarcaService } from '../../services/marca.service';
 
 @Component({
   selector: 'app-eliminar',
@@ -13,43 +13,43 @@ import { PaisService } from '../../services/pais.service';
   styleUrls: ['./eliminar.component.css']
 })
 export class EliminarComponent implements OnInit, OnDestroy {
-  pais: PaisI;
+  marca: MarcaI;
   routeSubscription: Subscription;
-  paisSubscription: Subscription;
+  marcaSubscription: Subscription;
   eliminarSubscription: Subscription;
   confirmacionSubscription: Subscription;
   constructor(
     private confirmacion: MatDialog,
     private route: ActivatedRoute,
-    private paisService: PaisService,
+    private marcaService: MarcaService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {
-    this.pais = {"idPais": 0, "denominacion": ''};
+    this.marca = {"idMarca": 0, "denominacion": ''};
   }
 
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
-      this.paisSubscription = this.paisService.getPais(params.id)
+      this.marcaSubscription = this.marcaService.getMarca(params.id)
       .subscribe(resp => {
-        this.pais = resp;
+        this.marca = resp;
       })
     })
   }
 
-  eliminarPais(){
+  eliminarMarca(){
     this.confirmacionSubscription = this.confirmacion
       .open(DialogoConfirmacionComponent, {
-        data: `¿Desea eliminar el pais?`
+        data: `¿Desea eliminar la marca?`
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {
         if (confirmado) {
-          const idPais = this.pais.idPais;
-          this.eliminarSubscription = this.paisService.eliminarPais(idPais)
+          const idmarca = this.marca.idMarca;
+          this.eliminarSubscription = this.marcaService.eliminarmarca(idmarca)
           .subscribe(resp => {
-            this.openSnackBar('Pais eliminado con exito', 'Cerrar');
-            this.router.navigateByUrl('paises');
+            this.openSnackBar('Marca eliminada con exito', 'Cerrar');
+            this.router.navigateByUrl('marcas');
           });
         }
       });
@@ -65,7 +65,7 @@ export class EliminarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.routeSubscription.unsubscribe();
-    this.paisSubscription.unsubscribe();
+    this.marcaSubscription.unsubscribe();
     if(this.eliminarSubscription){
       this.eliminarSubscription.unsubscribe();
       this.confirmacionSubscription.unsubscribe();

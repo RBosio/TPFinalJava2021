@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="header">
+    <div class="volver b-hover" routerLink="../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Nueva persona</p>
+  </div>
+  <form class="example-form form" [formGroup]="formularioRegistro">
+      <mat-form-field class="example-full-width nombre" appearance="fill">
+        <mat-label>Nombre *</mat-label>
+        <input type="text" matInput formControlName="nombre" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['nombre'].invalid && formularioRegistro.controls['nombre'].dirty">
+          <span *ngIf="formularioRegistro.controls['nombre'].errors.required">Nombre requerido</span>
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width apellido" appearance="fill">
+        <mat-label>Apellido *</mat-label>
+        <input type="text" matInput formControlName="apellido" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['apellido'].invalid && formularioRegistro.controls['apellido'].dirty">
+          <span *ngIf="formularioRegistro.controls['apellido'].errors.required">Apellido requerido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width dni" appearance="fill">
+        <mat-label>DNI *</mat-label>
+        <input type="text" matInput formControlName="dni" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['dni'].invalid && formularioRegistro.controls['dni'].dirty">
+          <span *ngIf="formularioRegistro.controls['dni'].errors.required">DNI requerido</span>
+        </mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['dni'].invalid && formularioRegistro.controls['dni'].dirty">
+          <span *ngIf="formularioRegistro.controls['dni'].errors.minlength || formularioRegistro.controls['dni'].errors.maxlength || formularioRegistro.controls['dni'].errors.pattern">DNI invalido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width email" appearance="fill">
+        <mat-label>Email *</mat-label>
+        <input type="email" matInput placeholder="email@example.com" formControlName="email" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['email'].invalid && formularioRegistro.controls['email'].dirty">
+          <span *ngIf="formularioRegistro.controls['email'].errors.email">Email invalido</span>
+        </mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['email'].invalid && formularioRegistro.controls['email'].dirty">
+          <span *ngIf="formularioRegistro.controls['email'].errors.required">Email requerido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width password" appearance="fill">
+        <mat-label>Contraseña *</mat-label>
+        <input type="password" matInput formControlName="password" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['password'].invalid && formularioRegistro.controls['password'].dirty">
+          <span *ngIf="formularioRegistro.controls['password'].errors.minlength">Longitud minima de 6 caracteres</span>
+        </mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['password'].invalid && formularioRegistro.controls['password'].dirty">
+          <span *ngIf="formularioRegistro.controls['password'].errors.required">Contraseña requerida</span>
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width telefono" appearance="fill">
+        <mat-label>Telefono *</mat-label>
+        <input type="text" matInput formControlName="telefono" autocomplete="off">
+        <mat-error *ngIf="formularioRegistro.controls['telefono'].invalid && formularioRegistro.controls['telefono'].dirty">
+          <span *ngIf="formularioRegistro.controls['telefono'].errors.required">Telefono requerido</span>
+        </mat-error>
+        <mat-error *ngIf="formularioRegistro.controls['telefono'].invalid && formularioRegistro.controls['telefono'].dirty">
+          <span *ngIf="formularioRegistro.controls['telefono'].errors.pattern">Telefono invalido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="pais">
+        <mat-label>Pais *</mat-label>
+        <mat-select formControlName="pais" (selectionChange)="getProvinciasxPais(opcionPais.value)" #opcionPais>
+          <mat-option *ngFor="let pais of paises" [value]="pais.idPais">
+            {{pais.denominacion}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formularioRegistro.controls['pais'].invalid && formularioRegistro.controls['pais'].dirty"><span *ngIf="formularioRegistro.controls['pais'].errors.required">Seleccione un pais</span></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="provincia">
+        <mat-label>Provincia *</mat-label>
+        <mat-select formControlName="provincia"  (selectionChange)="getLocalidadesxProvincia(opcionLoc.value)" #opcionLoc>
+          <mat-option *ngFor="let provincia of provincias" [value]="provincia.idProvincia">
+            {{provincia.denominacion}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formularioRegistro.controls['provincia'].invalid && formularioRegistro.controls['provincia'].dirty"><span *ngIf="formularioRegistro.controls['provincia'].errors.required">Seleccione una provincia</span></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="localidad">
+        <mat-label>Localidad *</mat-label>
+        <mat-select formControlName="localidad">
+          <mat-option *ngFor="let localidad of localidades" [value]="localidad.codPostal">
+            {{localidad.nombre}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formularioRegistro.controls['localidad'].invalid && formularioRegistro.controls['localidad'].dirty"><span *ngIf="formularioRegistro.controls['localidad'].errors.required">Seleccione una localidad</span></mat-error>
+      </mat-form-field>
+
+      <mat-checkbox class="check" (change)="checked = !checked">
+        Vendedor
+      </mat-checkbox>
+      
+      <button class="boton b-hover" [disabled]="!formularioRegistro.valid" (click)="signup($event)">Registrar</button>
+  </form>
+</div>

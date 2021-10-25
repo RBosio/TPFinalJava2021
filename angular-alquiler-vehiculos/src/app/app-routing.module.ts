@@ -10,7 +10,7 @@ const routes: Routes = [
     loadChildren: () => import('./alquiler/alquiler.module').then(m => m.AlquilerModule)
   },
   {
-    path: 'vehiculo',
+    path: 'vehiculos',
     loadChildren: () => import('./vehiculo/vehiculo.module').then(m => m.VehiculoModule)
   },
   {
@@ -28,6 +28,14 @@ const routes: Routes = [
   {
     path: 'localidades',
     loadChildren: () => import('./localidad/localidad.module').then(m => m.LocalidadModule)
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'marcas',
+    loadChildren: () => import('./marca/marca.module').then(m => m.MarcaModule)
   },
   {
     path: '**',

@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { fstatSync } from 'fs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VehiculoI } from 'src/app/models/vehiculo.model';
 import { LocalService } from 'src/app/shared/services/local.service';
@@ -15,21 +17,18 @@ export class VehiculoService {
     private localService: LocalService
     ) { }
 
-  getVehiculos(){
+  getVehiculo(idVeh: number): Observable<VehiculoI>{
+    return this.http.get<VehiculoI>(environment.BASE_URL+`/vehiculo/${idVeh}`)
+  }
+
+  getAll(): Observable<VehiculoI[]>{
     return this.http.get(environment.BASE_URL+'/vehiculo')
     .pipe(
-      map((resp: VehiculoI[]) => resp.filter(v => v.estado))
+      map((resp: VehiculoI[]) => resp.filter(v => v.estado && v.marca.estado))
     )
   }
 
-  getAll(){
-    return this.http.get(environment.BASE_URL+'/vehiculo')
-    .pipe(
-      map((resp: VehiculoI[]) => resp.filter(v => v.estado))
-    )
-  }
-
-  getVehiculosDisponibles(fechaHoraInicio: string, fechaHoraFin: string, marca: string, diferencia: number){
+  getVehiculosDisponibles(fechaHoraInicio: string, fechaHoraFin: string, marca: string, diferencia: number): Observable<VehiculoI[]>{
     return this.http.get(environment.BASE_URL+`/vehiculo/${fechaHoraInicio}/${fechaHoraFin}`)
     .pipe(
       map((resp: VehiculoI[]) => {
@@ -40,5 +39,19 @@ export class VehiculoService {
         return resp;
         })
     )
+  }
+
+  nuevoVehiculo(v: VehiculoI): Observable<VehiculoI>{
+    return this.http.post<VehiculoI>(environment.BASE_URL+`/vehiculo`, v)
+  }
+
+  cargarImagen(idVeh: number, file: File){
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.put(environment.BASE_URL+`/vehiculo/upload/${idVeh}`, fd)
+  }
+
+  eliminarVehiculo(idVeh: number): Observable<VehiculoI>{
+    return this.http.delete<VehiculoI>(environment.BASE_URL+`/vehiculo/${idVeh}`)
   }
 }

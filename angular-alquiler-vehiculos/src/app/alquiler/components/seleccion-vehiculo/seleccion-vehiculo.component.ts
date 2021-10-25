@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SeleccionVehiculoComponent implements OnInit {
   vehiculos : VehiculoI[];
-  page_size = 6;
+  page_size = 3;
   page_number = 1;
   BASE_URL = environment.BASE_URL;
   diferencia: number;

@@ -1,0 +1,88 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.volver{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 10%;
+    background-color: #13307E;
+    color: #fff;
+    border-radius: 5px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.volver p{
+    margin: auto 5px;
+}
+
+.text{
+    margin-right: 20px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.form{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.boton{
+    grid-column: 3/5;
+    grid-row: 4/5;
+    width: 50%;
+    padding: 5px;
+    cursor: pointer;
+    outline: none;
+    background-color: #13307E;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 20px;
+    margin: auto;
+}
+
+.message{
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+mat-form-field{
+    width: 70%;
+    margin: auto;
+}
+
+.email{
+    grid-column: 3/5;
+    grid-row: 1/2;
+}
+
+.password{
+    grid-column: 3/5;
+    grid-row: 2/3;
+}
+
+.localidad{
+    grid-column: 3/5;
+    grid-row: 3/4;
+}
+
+.check{
+    margin-left: 40px;
+}
