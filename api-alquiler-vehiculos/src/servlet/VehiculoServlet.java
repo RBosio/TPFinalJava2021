@@ -144,7 +144,7 @@ public class VehiculoServlet {
     @PUT
     @Path("/upload/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(@FormDataParam("file") InputStream fileInputStream, @FormDataParam("file") FormDataContentDisposition contentDispositionHeader, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
+    public void uploadFile(@FormDataParam("file") InputStream fileInputStream, @FormDataParam("file") FormDataContentDisposition contentDispositionHeader, @PathParam("id") int id, @Context HttpHeaders httpheaders) throws SQLException, IOException {
     	String token = httpheaders.getHeaderString("token");
     	if(token != null){
     		Token.getToken(token);				
@@ -165,10 +165,6 @@ public class VehiculoServlet {
     	saveFile(fileInputStream, filePath);
     	
     	vl.insertImage(veh);
-    	
-    	String output = "File saved to server location : " + filePath;
-    	
-    	return Response.status(200).entity(output).build();
     }
     
     @DELETE

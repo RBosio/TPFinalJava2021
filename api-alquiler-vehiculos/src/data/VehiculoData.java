@@ -161,7 +161,7 @@ public class VehiculoData {
 		ResultSet key = null;
 
 		try {
-			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO vehiculo(denominacion, cantPersonas, tipoCambio, aireAc, abs, precioDia, cantidad, idMarca) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt = DbConnector.getInstancia().getConn().prepareStatement("INSERT INTO vehiculo(denominacion, cantPersonas, tipoCambio, aireAc, abs, precioDia, cantidad, idMarca) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, nuevoV.getDenominacion());
 			stmt.setInt(2, nuevoV.getCantPersonas());
 			stmt.setString(3, nuevoV.getTipoCambio());
