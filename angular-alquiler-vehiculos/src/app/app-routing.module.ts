@@ -38,6 +38,14 @@ const routes: Routes = [
     loadChildren: () => import('./marca/marca.module').then(m => m.MarcaModule)
   },
   {
+    path: 'seguros',
+    loadChildren: () => import('./seguro/seguro.module').then(m => m.SeguroModule)
+  },
+  {
+    path: 'extras',
+    loadChildren: () => import('./extra/extra.module').then(m => m.ExtraModule)
+  },
+  {
     path: '**',
     redirectTo: 'alquiler'
   },

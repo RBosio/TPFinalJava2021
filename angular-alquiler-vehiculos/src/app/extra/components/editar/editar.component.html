@@ -1,0 +1,34 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Editar Extra</p>
+</div>
+<form class="example-form form" [formGroup]="formulario">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Id Extra</mat-label>
+        <input type="text" matInput [value]="extra.idExtra" disabled="true">
+      </mat-form-field>
+      
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Descripcion *</mat-label>
+      <input type="text" matInput formControlName="descripcion" autocomplete="off" [value]="extra.descripcion">
+      <mat-error *ngIf="formulario.controls['descripcion'].invalid && formulario.controls['descripcion'].dirty">
+        <span *ngIf="formulario.controls['descripcion'].errors.required">Descripcion requerida</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width precioDia" appearance="fill">
+      <mat-label>Precio x Dia *</mat-label>
+      <input type="text" matInput formControlName="precioDia" autocomplete="off" [value]="extra.precioDia">
+      <mat-error *ngIf="formulario.controls['precioDia'].invalid && formulario.controls['precioDia'].dirty">
+        <span *ngIf="formulario.controls['precioDia'].errors.required">Cantidad de personas requerido</span>
+      </mat-error>
+      <mat-error *ngIf="formulario.controls['precioDia'].invalid && formulario.controls['precioDia'].dirty">
+        <span *ngIf="formulario.controls['precioDia'].errors.pattern">Numero invalido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="editarextra()" [disabled]="!formulario.valid">Editar</button>
+</form>

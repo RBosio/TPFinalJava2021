@@ -1,6 +1,6 @@
 export interface ExtraI{
-    idExtra: number;
+    idExtra?: number;
     descripcion: string;
     precioDia: number;
-    estado: boolean;
+    estado?: boolean;
 }

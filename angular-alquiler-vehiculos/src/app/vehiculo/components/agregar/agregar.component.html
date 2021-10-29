@@ -35,7 +35,7 @@
         <div style="display: flex; justify-content: space-between; width: 100%; margin-top: 15px;">
             <mat-form-field class="example-full-width cantPersonas" appearance="fill">
               <mat-label>Cant. Personas *</mat-label>
-              <input type="number" matInput formControlName="cantPersonas" autocomplete="off" min="1">
+              <input type="text" matInput formControlName="cantPersonas" autocomplete="off" min="1">
               <mat-error *ngIf="formularioVehiculo.controls['cantPersonas'].invalid && formularioVehiculo.controls['cantPersonas'].dirty">
                 <span *ngIf="formularioVehiculo.controls['cantPersonas'].errors.required">Cantidad de personas requerido</span>
               </mat-error>
@@ -56,23 +56,25 @@
             </mat-form-field>
         </div>
   
-        <mat-form-field appearance="fill" class="tipoCambio">
-          <mat-label>tipoCambio *</mat-label>
-          <mat-select formControlName="tipoCambio">
-            <mat-option *ngFor="let tipoCambio of tiposCambio" [value]="tipoCambio.sigla">
-              {{tipoCambio.denominacion}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="formularioVehiculo.controls['tipoCambio'].invalid && formularioVehiculo.controls['tipoCambio'].dirty"><span *ngIf="formularioVehiculo.controls['tipoCambio'].errors.required">Seleccione un tipo de cambio</span></mat-error>
-        </mat-form-field>
-  
-        <mat-checkbox class="check" formControlName="abs">
-          ABS
-        </mat-checkbox>
-        
-        <mat-checkbox class="check" formControlName="aireAc">
-          Aire AC
-        </mat-checkbox>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 15px;">
+          <mat-form-field appearance="fill" class="tipoCambio">
+            <mat-label>tipoCambio *</mat-label>
+            <mat-select formControlName="tipoCambio">
+              <mat-option *ngFor="let tipoCambio of tiposCambio" [value]="tipoCambio.sigla">
+                {{tipoCambio.denominacion}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formularioVehiculo.controls['tipoCambio'].invalid && formularioVehiculo.controls['tipoCambio'].dirty"><span *ngIf="formularioVehiculo.controls['tipoCambio'].errors.required">Seleccione un tipo de cambio</span></mat-error>
+          </mat-form-field>
+    
+          <mat-checkbox class="check" formControlName="abs">
+            ABS
+          </mat-checkbox>
+          
+          <mat-checkbox class="check" formControlName="aireAc">
+            Aire AC
+          </mat-checkbox>
+        </div>
         
         <button class="boton b-hover" (click)="nuevoVehiculo($event)">Registrar</button>
     </form>

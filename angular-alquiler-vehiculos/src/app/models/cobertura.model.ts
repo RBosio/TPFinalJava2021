@@ -1,6 +1,6 @@
 export interface CoberturaI{
-    idCob: number;
+    idCob?: number;
     descripcion: string;
     precioDia: number;
-    estado: boolean;
+    estado?: boolean;
 }

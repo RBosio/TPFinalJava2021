@@ -3,8 +3,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { PaisI } from 'src/app/models/pais.model';
-import { PaisService } from 'src/app/pais/services/pais.service';
+import { ExtraI } from 'src/app/models/extra.model';
+import { ExtraService } from 'src/app/extra/services/extra.service';
 
 @Component({
   selector: 'app-listado',
@@ -13,31 +13,31 @@ import { PaisService } from 'src/app/pais/services/pais.service';
 })
 
 export class ListadoComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['idPais', 'denominacion', 'operaciones'];
-  ELEMENT_DATA: PaisI[] = [];
-  dataSource: MatTableDataSource<PaisI>;
-  paisesSubscription: Subscription;
+  displayedColumns: string[] = ['idExtra', 'descripcion', 'precioDia', 'operaciones'];
+  ELEMENT_DATA: ExtraI[] = [];
+  dataSource: MatTableDataSource<ExtraI>;
+  extrasSubscription: Subscription;
   
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private paisService: PaisService
+    private extraService: ExtraService
   ){}
   
   ngOnInit(){}
 
   ngAfterViewInit(){
-    this.paisesSubscription = this.paisService.getPaises()
+    this.extrasSubscription = this.extraService.getExtras()
     .subscribe(resp => {
       this.ELEMENT_DATA = resp;
-      this.dataSource = new MatTableDataSource<PaisI>(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource<ExtraI>(this.ELEMENT_DATA);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     })
   }
 
   ngOnDestroy(){
-    this.paisesSubscription.unsubscribe();
+    this.extrasSubscription.unsubscribe();
   }
 }

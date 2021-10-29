@@ -1,0 +1,25 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Eliminar Extra</p>
+</div>
+<form class="example-form form">
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Id Extra</mat-label>
+        <input type="text" matInput [value]="extra.idExtra" disabled="true">
+      </mat-form-field>
+      
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Descripcion *</mat-label>
+      <input type="text" matInput [value]="extra.descripcion" disabled="true">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width precioDia" appearance="fill">
+      <mat-label>Precio x Dia *</mat-label>
+      <input type="text" matInput [value]="extra.precioDia" disabled="true">
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="eliminarExtra()">Eliminar</button>
+</form>

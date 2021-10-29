@@ -56,11 +56,11 @@ export class AgregarComponent implements OnInit, OnDestroy {
     this.formularioVehiculo = this.fb.group({
       denominacion: ['', Validators.required],
       marca: ['', Validators.required],
-      cantPersonas: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
+      cantPersonas: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]+$')])],
       aireAc: [false, Validators.required],
       abs: [false, Validators.required],
       tipoCambio: ['', Validators.required],
-      precioDia: ['', Validators.required],
+      precioDia: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]+(\.[0-9]+)?$')])],
     })
   }
   
@@ -73,7 +73,7 @@ export class AgregarComponent implements OnInit, OnDestroy {
       "aireAc": this.formularioVehiculo.value.aireAc,
       "abs": this.formularioVehiculo.value.abs,
       "tipoCambio": this.formularioVehiculo.value.tipoCambio,
-      "precioDia": parseInt(this.formularioVehiculo.value.precioDia),
+      "precioDia": parseFloat(this.formularioVehiculo.value.precioDia),
     }
     
     this.vehiculoSubscription = this.vehiculoService.nuevoVehiculo(this.vehiculo)

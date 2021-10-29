@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { PaisI } from 'src/app/models/pais.model';
-import { PaisService } from 'src/app/pais/services/pais.service';
+import { CoberturaI } from 'src/app/models/cobertura.model';
+import { SeguroService } from 'src/app/seguro/services/seguro.service';
 
 @Component({
   selector: 'app-listado',
@@ -13,31 +13,31 @@ import { PaisService } from 'src/app/pais/services/pais.service';
 })
 
 export class ListadoComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['idPais', 'denominacion', 'operaciones'];
-  ELEMENT_DATA: PaisI[] = [];
-  dataSource: MatTableDataSource<PaisI>;
-  paisesSubscription: Subscription;
+  displayedColumns: string[] = ['idCob', 'descripcion', 'precioDia', 'operaciones'];
+  ELEMENT_DATA: CoberturaI[] = [];
+  dataSource: MatTableDataSource<CoberturaI>;
+  segurosSubscription: Subscription;
   
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private paisService: PaisService
+    private seguroService: SeguroService
   ){}
   
   ngOnInit(){}
 
   ngAfterViewInit(){
-    this.paisesSubscription = this.paisService.getPaises()
+    this.segurosSubscription = this.seguroService.getSeguros()
     .subscribe(resp => {
       this.ELEMENT_DATA = resp;
-      this.dataSource = new MatTableDataSource<PaisI>(this.ELEMENT_DATA);
+      this.dataSource = new MatTableDataSource<CoberturaI>(this.ELEMENT_DATA);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     })
   }
 
   ngOnDestroy(){
-    this.paisesSubscription.unsubscribe();
+    this.segurosSubscription.unsubscribe();
   }
 }

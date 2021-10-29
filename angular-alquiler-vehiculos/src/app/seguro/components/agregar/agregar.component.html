@@ -1,0 +1,29 @@
+<div class="header">
+    <div class="volver b-hover" routerLink="../listado">
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p>Volver</p>  
+    </div>
+    <p class="text">Nuevo seguro</p>
+</div>
+<form class="example-form form" [formGroup]="formulario">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Descripcion *</mat-label>
+      <input type="text" matInput formControlName="descripcion" autocomplete="off">
+      <mat-error *ngIf="formulario.controls['descripcion'].invalid && formulario.controls['descripcion'].dirty">
+        <span *ngIf="formulario.controls['descripcion'].errors.required">Descripcion requerida</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width precioDia" appearance="fill">
+      <mat-label>Precio x Dia *</mat-label>
+      <input type="text" matInput formControlName="precioDia" autocomplete="off" min="1">
+      <mat-error *ngIf="formulario.controls['precioDia'].invalid && formulario.controls['precioDia'].dirty">
+        <span *ngIf="formulario.controls['precioDia'].errors.required">Cantidad de personas requerido</span>
+      </mat-error>
+      <mat-error *ngIf="formulario.controls['precioDia'].invalid && formulario.controls['precioDia'].dirty">
+        <span *ngIf="formulario.controls['precioDia'].errors.pattern">Numero invalido</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button class="boton b-hover" (click)="nuevoSeguro()" [disabled]="!formulario.valid">Agregar</button>
+  </form>

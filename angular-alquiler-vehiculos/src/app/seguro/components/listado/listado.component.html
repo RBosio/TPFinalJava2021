@@ -1,0 +1,36 @@
+<div class="contenedor">
+    <div class="mat-elevation-z8">
+      <mat-paginator [pageSizeOptions]="[6]">
+      </mat-paginator>
+    
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="idCob">
+          <th mat-header-cell *matHeaderCellDef> # </th>
+          <td mat-cell *matCellDef="let element"> {{element.idCob}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="precioDia">
+          <th mat-header-cell *matHeaderCellDef> Precio x Dia </th>
+          <td mat-cell *matCellDef="let element"> {{element.precioDia}} </td>
+        </ng-container>
+        
+        <ng- matColumnDef="operaciones">
+          <th mat-header-cell *matHeaderCellDef class="operaciones"> Operaciones </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="icons">
+              <i class="fas fa-edit edit" [routerLink]="['../editar/', element.idCob]"></i>
+              <i class="fas fa-trash-alt trash" [routerLink]="['../eliminar/', element.idCob]"></i>
+            </div>
+          </td>
+        </ng->
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>

@@ -31,7 +31,7 @@ export class SegurosExtrasComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.diferencia = this.localService.getJsonValue('fechas').diferencia;
-    this.seguroSubscription = this.seguroService.getSeguros()
+    this.seguroSubscription = this.seguroService.getSegurosFiltrados()
     .subscribe(resp => {
       this.seguros = resp;
     })
