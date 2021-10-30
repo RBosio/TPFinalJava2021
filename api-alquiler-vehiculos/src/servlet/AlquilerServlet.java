@@ -93,7 +93,9 @@ public class AlquilerServlet {
     	return alquiler;
     }
 
-    @DELETE
+    @PUT
+    @Path("/cancelar")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Alquiler cancelarAlq(Alquiler cancelarAlq, @Context HttpHeaders httpheaders) throws SQLException, IOException{
     	String token = httpheaders.getHeaderString("token");
