@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fechaDDefinitiva = moment(this.formulario.value.fechaDevolucion).format('YYYY-MM-DD')+'T'+this.formulario.value.horaDevolucion+':00';
     this.vehiculosSubscription = this.vehiculoService.getVehiculosDisponibles(this.fechaRDefinitiva, this.fechaDDefinitiva, this.formulario.value.marca, diff)
     .subscribe(resp => {
-      this.router.navigateByUrl('alquiler/seleccion-vehiculo');
+      this.router.navigateByUrl('alquileres/seleccion-vehiculo');
     })
   }
 

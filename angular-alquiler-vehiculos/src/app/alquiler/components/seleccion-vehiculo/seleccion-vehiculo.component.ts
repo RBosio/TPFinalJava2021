@@ -33,6 +33,6 @@ export class SeleccionVehiculoComponent implements OnInit {
 
   seleccion(idVeh: number){
     this.localService.setJsonValue('vehiculoSeleccionado', this.vehiculos.filter(v => v.idVeh == idVeh));
-    this.router.navigateByUrl('alquiler/seguros-extras');
+    this.router.navigateByUrl('alquileres/seguros-extras');
   }
 }

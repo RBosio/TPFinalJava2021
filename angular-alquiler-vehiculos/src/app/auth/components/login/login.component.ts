@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.loginSubscription = this.authService.login(this.user)
     .subscribe(res => {
-      this.router.navigateByUrl('')
+      this.router.navigateByUrl('alquileres')
     },
     err => {
       this.openSnackBar(err, 'Cerrar');

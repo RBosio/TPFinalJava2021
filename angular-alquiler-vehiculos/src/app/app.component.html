@@ -10,7 +10,7 @@
                             <i class="fas fa-chevron-right" [ngClass]="{'rotate': dataToggleVendedor[index]}" (click)="toggleVendedor(index)"></i>
                         </div>
                         <ul class="sub-menu" [ngClass]="{'block': dataToggleVendedor[index]}">
-                            <li *ngFor="let options of d.options">
+                            <li *ngFor="let options of d.options" [routerLink]="d.item.toLowerCase()+'/'+opciones(options)">
                                 {{options}}
                             </li>
                         </ul>

@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   mode: string;
   
   dataVendedor = [
-    {"item": "Alquileres", "options": ["Listado", "Confirmar alquiler", "Confirmar devolucion", "Cancelar alquiler"]}
+    {"item": "Alquileres", "options": ["Listado"]}
   ];
   dataAdministrador = [
     {"item": "Paises", "options": ["Listado", "Agregar nuevo pais"]},

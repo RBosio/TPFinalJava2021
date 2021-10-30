@@ -6,5 +6,7 @@ export interface AlquilerI{
     fechaHoraFin: string;
     idVeh: number;
     idCob: number;
+    estado?: string;
     extras: ExtraI[];
+    estados?: boolean[];
 }

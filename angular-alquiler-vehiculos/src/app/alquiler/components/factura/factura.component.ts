@@ -72,7 +72,7 @@ export class FacturaComponent implements OnInit, OnDestroy {
             this.localService.clearToken();
             this.localService.setJsonValue('token', token);
             this.localService.setJsonValue('user', user);
-            this.router.navigateByUrl('alquiler');
+            this.router.navigateByUrl('alquileres');
           })
         }
       });

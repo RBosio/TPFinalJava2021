@@ -56,7 +56,7 @@ export class SegurosExtrasComponent implements OnInit, OnDestroy {
     if(this.seguro){
       const seguro_extras = {seguro: this.seguro, extras: this.extrasElegidos};
       this.localService.setJsonValue('seguro-extras', seguro_extras);
-      this.router.navigateByUrl('alquiler/factura');
+      this.router.navigateByUrl('alquileres/factura');
     }else{
       this.openSnackBar('Seleccione un seguro', 'Cerrar');
     }

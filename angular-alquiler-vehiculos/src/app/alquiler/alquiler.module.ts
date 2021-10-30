@@ -8,6 +8,7 @@ import { FacturaComponent } from './components/factura/factura.component';
 import { HomeComponent } from './components/home/home.component';
 import { SegurosExtrasComponent } from './components/seguros-extras/seguros-extras.component';
 import { SeleccionVehiculoComponent } from './components/seleccion-vehiculo/seleccion-vehiculo.component';
+import { ListadoComponent } from './components/listado/listado.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SeleccionVehiculoComponent } from './components/seleccion-vehiculo/sele
     HomeComponent,
     SeleccionVehiculoComponent,
     SegurosExtrasComponent,
-    FacturaComponent
+    FacturaComponent,
+    ListadoComponent
   ],
   imports: [
     CommonModule,

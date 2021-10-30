@@ -13,6 +13,7 @@ import { LocalService } from 'src/app/shared/services/local.service';
 export class AuthService {
   user: UserLoginResponseI
   userEvent = new EventEmitter<UserLoginResponseI>();
+  userExpired = new EventEmitter<void>();
 
   constructor(
     private http: HttpClient,
@@ -44,5 +45,13 @@ export class AuthService {
         return throwError(err.error.message)
       })
     )
+  }
+
+  logout(){
+    this.localStorageService.clearToken();
+  }
+
+  tokenExpired(){
+    this.userExpired.emit();
   }
 }

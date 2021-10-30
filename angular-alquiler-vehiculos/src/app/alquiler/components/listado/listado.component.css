@@ -1,0 +1,58 @@
+.contenedor{
+    width: 90%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+.confirmado:hover, .terminado:hover, .cancelacion:hover{
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.confirmado{
+    padding: 10px;
+    font-size: 16px;
+    color: #18c297;
+}
+
+.terminado{
+    padding: 10px;
+    font-size: 16px;
+    color: #42be2a;
+}
+
+.cancelacion{
+    padding: 10px;
+    font-size: 16px;
+    color: #ff4e48;
+}
+
+.pendiente{
+    background-color: #dfd21d;
+}
+
+.cancelado{
+    background-color: #ff4e48;
+}
+
+.curso{
+    background-color: #18c297;
+}
+
+.completado{
+    background-color: #42be2a;
+}
+
+.flex{
+    display: flex;
+}
+
+.circulo{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}

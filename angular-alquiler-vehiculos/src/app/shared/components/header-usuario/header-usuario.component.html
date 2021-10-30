@@ -5,15 +5,14 @@
   </div>
   <div class="user" *ngIf="usuario">
     <p class="name">{{usuario.nombre}} {{usuario.apellido}}</p>
-    <i class="fas fa-sign-out-alt icon"></i>
+    <i class="fas fa-sign-out-alt icon" (click)="logout()"></i>
   </div>
 </header>
 <div class="container-nav" *ngIf="usuario">
   <nav class="nav">
     <ul class="items">
-        <li routerLink="alquiler" routerLinkActive="active">Alquilar</li>
+        <li routerLink="alquileres" routerLinkActive="active">Alquilar</li>
         <li routerLink="vehiculos" routerLinkActive="active">Vehiculos</li>
-        <li routerLink="contacto" routerLinkActive="active">Contacto</li>
     </ul>
     <ul class="paneles">
         <li *ngIf="vendedor()" (click)="toggleSidenavVendedor()">Panel Vendedor</li>
